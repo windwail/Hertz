@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CMNumberPicker">
+        <attr name="cm_picker_value" format="float"/>
+        <attr name="cm_picker_max" format="float"/>
+        <attr name="cm_picker_min" format="float"/>
+        <attr name="cm_picker_step" format="float"/>
+        <attr name="cm_picker_title" format="string"/>
+        <attr name="cm_picker_units" format="string"/>
+        <attr name="cm_picker_float" format="boolean"/>
+        <attr name="cm_picker_buttons" format="boolean"/>
+    </declare-styleable>
+</resources>

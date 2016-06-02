@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="fill_horizontal"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:text="Front left wheel:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="22dp"/>
+
+
+    <ImageButton
+        android:id="@+id/plusButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/title"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/ic_plus_48dp"/>
+
+
+    <ImageButton
+        android:id="@+id/minusButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/plusButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/ic_minus_48dp"
+        />
+
+
+    <EditText
+        android:id="@+id/value"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/minusButton"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="85dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="2.12"
+        android:textSize="30dp"
+        android:paddingLeft="20dp"/>
+
+    <TextView
+        android:id="@+id/units"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/value"
+        android:layout_alignTop="@+id/value"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/plusButton"
+        android:layout_toStartOf="@+id/plusButton"
+        android:text="bar."
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+</RelativeLayout>

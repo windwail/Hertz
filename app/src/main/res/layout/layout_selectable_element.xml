@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_list_item">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Button"
+        android:id="@+id/elementLabel"
+        android:textColor="#404040"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:maxLines="3"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="#5e5e5e"
+        android:layout_below="@id/carTextView"
+        android:id="@+id/view"/>
+
+</RelativeLayout>
