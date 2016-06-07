@@ -19,11 +19,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
         <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".MenuActivity">
         </activity>
@@ -44,8 +40,14 @@
         <activity android:name=".CaptureMileageActivity">
         </activity>
         <activity android:name=".CaptureFuelActivity">
+        </activity>
+        <activity android:name=".StartInfleetActivity">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 

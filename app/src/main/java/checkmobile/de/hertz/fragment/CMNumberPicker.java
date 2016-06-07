@@ -76,8 +76,6 @@ public class CMNumberPicker extends Fragment {
         }
 
 
-        TextView tv = (TextView) v.findViewById(R.id.title);
-        tv.setText(title);
 
         TextView u = (TextView) v.findViewById(R.id.units);
         u.setText(units);
