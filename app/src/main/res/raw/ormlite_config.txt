@@ -1,0 +1,23 @@
+# --table-start--
+dataClass=checkmobile.de.hertz.entity.InfleetStart
+tableName=infleetStart
+# --table-fields-start--
+# --field-start--
+fieldName=Id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=date
+# --field-end--
+# --field-start--
+fieldName=finished
+# --field-end--
+# --field-start--
+fieldName=carCount
+# --field-end--
+# --field-start--
+fieldName=driverName
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
