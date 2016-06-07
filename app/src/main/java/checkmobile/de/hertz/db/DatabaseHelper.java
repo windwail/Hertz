@@ -1,78 +1,114 @@
 package checkmobile.de.hertz.db;
 
+import java.sql.SQLException;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
-import java.sql.SQLException;
-
-import checkmobile.de.hertz.dao.InfleetStartDao;
 import checkmobile.de.hertz.entity.InfleetStart;
 
 /**
- * Created by icetusk on 07.06.16.
+ * Database helper class used to manage the creation and upgrading of your database. This class also usually provides
+ * the DAOs used by the other classes.
  */
-public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
+public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
-    private static final String TAG = DatabaseHelper.class.getSimpleName();
-
-    //имя файла базы данных который будет храниться в /data/data/APPNAME/DATABASE_NAME.db
-    private static final String DATABASE_NAME ="myappname.db";
-
-    //с каждым увеличением версии, при нахождении в устройстве БД с предыдущей версией будет выполнен метод onUpgrade();
+    // name of the database file for your application -- change to something appropriate for your app
+    private static final String DATABASE_NAME = "helloAndroid.db";
+    // any time you make changes to your database objects, you may have to increase the database version
     private static final int DATABASE_VERSION = 1;
 
-    //ссылки на DAO соответсвующие сущностям, хранимым в БД
-    private InfleetStartDao infleetStartDao = null;
+    // the DAO object we use to access the SimpleData table
+    private Dao<InfleetStart, Integer> simpleDao = null;
+    private RuntimeExceptionDao<InfleetStart, Integer> simpleRuntimeDao = null;
 
-    public DatabaseHelper(Context context){
-        super(context,DATABASE_NAME, null, DATABASE_VERSION);
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    //Выполняется, когда файл с БД не найден на устройстве
+    /**
+     * This is called when the database is first created. Usually you should call createTable statements here to create
+     * the tables that will store your data.
+     */
     @Override
-    public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource){
-        try
-        {
+    public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
+        try {
+            Log.i(DatabaseHelper.class.getName(), "onCreate");
             TableUtils.createTable(connectionSource, InfleetStart.class);
-        }
-        catch (SQLException e){
-            Log.e(TAG, "error creating DB " + DATABASE_NAME);
+        } catch (SQLException e) {
+            Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
         }
+
+        // here we try inserting data in the on-create as a test
+        RuntimeExceptionDao<InfleetStart, Integer> dao = getSimpleDataDao();
+        long millis = System.currentTimeMillis();
+        // create some entries in the onCreate
+
+
+        InfleetStart simple = new InfleetStart();
+        simple.setCarCount(10);
+        simple.setDate(new java.util.Date());
+        //simple.setCarCount(10);
+        dao.create(simple);
+
+
+        Log.i(DatabaseHelper.class.getName(), "created new entries in onCreate: " + millis);
     }
 
-    //Выполняется, когда БД имеет версию отличную от текущей
+    /**
+     * This is called when your application is upgraded and it has a higher version number. This allows you to adjust
+     * the various data to match the new version number.
+     */
     @Override
-    public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVer,
-                          int newVer){
-        try{
-            //Так делают ленивые, гораздо предпочтительнее не удаляя БД аккуратно вносить изменения
+    public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
+        try {
+            Log.i(DatabaseHelper.class.getName(), "onUpgrade");
             TableUtils.dropTable(connectionSource, InfleetStart.class, true);
+            // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
-        }
-        catch (SQLException e){
-            Log.e(TAG,"error upgrading db "+DATABASE_NAME+"from ver "+oldVer);
+        } catch (SQLException e) {
+            Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
             throw new RuntimeException(e);
         }
     }
 
-    //синглтон для GoalDAO
-    public InfleetStartDao getInfleetStartDao() throws SQLException{
-        if(infleetStartDao == null){
-            infleetStartDao = new InfleetStartDao(getConnectionSource(), InfleetStart.class);
+    /**
+     * Returns the Database Access Object (DAO) for our SimpleData class. It will create it or just give the cached
+     * value.
+     */
+    public Dao<InfleetStart, Integer> getDao() throws SQLException {
+        if (simpleDao == null) {
+            simpleDao = getDao(InfleetStart.class);
         }
-        return infleetStartDao;
+        return simpleDao;
     }
 
-    //выполняется при закрытии приложения
+    /**
+     * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our SimpleData class. It will
+     * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
+     */
+    public RuntimeExceptionDao<InfleetStart, Integer> getSimpleDataDao() {
+        if (simpleRuntimeDao == null) {
+            simpleRuntimeDao = getRuntimeExceptionDao(InfleetStart.class);
+        }
+        return simpleRuntimeDao;
+    }
+
+    /**
+     * Close the database connections and clear any cached DAOs.
+     */
     @Override
-    public void close(){
+    public void close() {
         super.close();
-        infleetStartDao = null;
+        simpleDao = null;
+        simpleRuntimeDao = null;
     }
 }

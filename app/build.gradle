@@ -7,6 +7,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.1.0'
         // the latest version of the android-apt plugin
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.github.stephanenicolas.ormgap:ormgap-plugin:1.0.7'
     }
 }
 
@@ -19,11 +20,18 @@ repositories {
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'ormgap'
+
 def AAVersion = '4.0.0' // change this to your desired version, for example the latest stable: 4.0.0
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'javax.annotation:jsr250-api:1.0'
+
     testCompile 'junit:junit:4.12'
+
+
+
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.wrapp.floatlabelededittext:library:0.0.6'
     compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
@@ -35,14 +43,17 @@ dependencies {
 
     compile 'com.j256.ormlite:ormlite-android:4.48'
 
-    provided 'org.projectlombok:lombok:1.16.6'
-
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
+
+    apt "org.androidannotations:ormlite:$AAVersion"
+    compile "org.androidannotations:ormlite-api:$AAVersion"
 
 
 
 }
+
+
 
 android {
     compileSdkVersion 23

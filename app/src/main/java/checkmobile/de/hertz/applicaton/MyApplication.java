@@ -2,19 +2,23 @@ package checkmobile.de.hertz.applicaton;
 
 import android.app.Application;
 
-import checkmobile.de.hertz.db.DatabaseHelper;
+import org.androidannotations.annotations.EApplication;
+import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
-/**
- * Created by icetusk on 07.06.16.
- */
+import checkmobile.de.hertz.dao.InfleetStartDao;
+import checkmobile.de.hertz.db.DatabaseHelper;
+import checkmobile.de.hertz.entity.InfleetStart;
+import lombok.Getter;
+
+@EApplication
 public class MyApplication extends Application{
 
-    private DatabaseHelper databaseHelper;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        databaseHelper = new DatabaseHelper(getApplicationContext());
     }
+
+
 
 }
