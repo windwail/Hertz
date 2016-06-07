@@ -24,6 +24,14 @@
         <item>Button State sample</item>
     </array>
 
+    <array name="condition_list">
+        <item>-</item>
+        <item>Dirty</item>
+        <item>Covered with snow</item>
+        <item>Dusty</item>
+        <item>Damaged</item>
+    </array>
+
     <string name="ic_access_alarms">&#xe000;</string>
     <string name="ic_access_time">&#xe001;</string>
     <string name="ic_accessibility">&#xe002;</string>
