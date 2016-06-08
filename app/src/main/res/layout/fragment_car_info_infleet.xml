@@ -1,0 +1,199 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="checkmobile.de.hertz.CarInfoInfleetFragment">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Car: 1/10"
+            android:id="@+id/textView29"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Unit No."
+            android:id="@+id/unitNo"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextUnitNu"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="License Plate No"
+            android:id="@+id/textView18"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextLicensePlateNo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Vehicle type"
+            android:id="@+id/textView19"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/spinnerVehicleType"
+            android:entries="@array/models_list"
+            style="@android:style/Widget.Spinner.DropDown"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="VIN"
+            android:id="@+id/textView20"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextVIN"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Car group"
+            android:id="@+id/textView21"/>
+
+        <Spinner
+            style="@android:style/Widget.Spinner.DropDown"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/spinner2"
+            android:entries="@array/models_list"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Manufacturer"
+            android:id="@+id/textView22"/>
+
+        <Spinner
+            style="@android:style/Widget.Spinner.DropDown"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/spinner3"
+            android:entries="@array/models_list"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Model"
+            android:id="@+id/textView23"/>
+
+        <Spinner
+            style="@android:style/Widget.Spinner.DropDown"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/spinner4"
+            android:entries="@array/models_list"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Gearing"
+            android:id="@+id/textView24"/>
+
+        <Spinner
+            style="@android:style/Widget.Spinner.DropDown"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/spinner5"
+            android:entries="@array/models_list"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Fuel type"
+            android:id="@+id/textView25"/>
+
+        <Spinner
+            style="@android:style/Widget.Spinner.DropDown"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/spinner6"
+            android:entries="@array/models_list"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Tank capacity in ltr."
+            android:id="@+id/textView26"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText2"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Colour of car body"
+            android:id="@+id/textView27"/>
+
+        <Spinner
+            style="@android:style/Widget.Spinner.DropDown"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/spinner7"
+            android:entries="@array/models_list"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Metallic"
+            android:id="@+id/checkBox"
+            android:checked="false"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Current dedicated station"
+            android:id="@+id/textView28"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText3"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Done"
+            android:id="@+id/button2"/>
+    </LinearLayout>
+</ScrollView>

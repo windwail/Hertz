@@ -12,6 +12,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import checkmobile.de.hertz.dao.InfleetStartDao;
 import checkmobile.de.hertz.entity.InfleetStart;
 
 /**
@@ -80,16 +81,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    /**
-     * Returns the Database Access Object (DAO) for our SimpleData class. It will create it or just give the cached
-     * value.
-     */
-    public Dao<InfleetStart, Integer> getDao() throws SQLException {
-        if (simpleDao == null) {
-            simpleDao = getDao(InfleetStart.class);
-        }
-        return simpleDao;
-    }
 
     /**
      * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our SimpleData class. It will

@@ -10,13 +10,10 @@ import java.util.List;
 
 import checkmobile.de.hertz.entity.InfleetStart;
 
-/**
- * Created by icetusk on 07.06.16.
- */
 public class InfleetStartDao extends BaseDaoImpl<InfleetStart, Integer> {
 
-    public InfleetStartDao(ConnectionSource connectionSource, Class<InfleetStart> dataClass) throws SQLException {
-        super(connectionSource, dataClass);
+    public InfleetStartDao(ConnectionSource connectionSource) throws SQLException {
+        super(connectionSource, InfleetStart.class);
     }
 
     public List<InfleetStart> getGoalByName(String name)  throws SQLException{

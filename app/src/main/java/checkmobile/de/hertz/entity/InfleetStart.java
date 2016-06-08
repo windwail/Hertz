@@ -5,6 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
+import checkmobile.de.hertz.dao.InfleetStartDao;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +13,7 @@ import lombok.Setter;
  * Created by icetusk on 07.06.16.
  */
 
-@DatabaseTable(tableName = "infleetStart")
+@DatabaseTable(tableName = "infleetStart", daoClass = InfleetStartDao.class)
 public class InfleetStart {
 
     @DatabaseField(generatedId = true)
@@ -31,8 +32,8 @@ public class InfleetStart {
     private Boolean finished;
 
     @DatabaseField
-    @Setter
     @Getter
+    @Setter
     private Integer carCount;
 
     @DatabaseField
