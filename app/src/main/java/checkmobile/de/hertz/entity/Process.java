@@ -2,8 +2,10 @@ package checkmobile.de.hertz.entity;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
@@ -13,6 +15,8 @@ import lombok.Setter;
 
 @DatabaseTable(tableName = "process", daoClass = ProcessDao.class)
 public class Process {
+
+    public enum Type { INFLEET };
 
     public Process(String processName) {
         name = processName;
@@ -38,5 +42,19 @@ public class Process {
     @Setter
     private Boolean finished;
 
+    @DatabaseField
+    @Getter
+    @Setter
+    private Boolean mandatory;
+
+    @DatabaseField (foreign = true, foreignAutoRefresh = true, columnName = "parentGroup")
+    @Getter
+    @Setter
+    private ProcessGroup parent;
+
+    @ForeignCollectionField
+    @Getter
+    @Setter
+    Collection<Process> processes;
 
 }
