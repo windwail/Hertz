@@ -10,21 +10,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import checkmobile.de.hertz.R;
 import checkmobile.de.hertz.domain.CMProcess;
 import checkmobile.de.hertz.helper.ProcessesHelper;
 
-
 /**
- * Created by icetusk on 23.05.16.
+ * Created by icetusk on 09.06.16.
  */
-public class ProcessesAdapter extends ArrayAdapter {
+public class InfleetMenuAdapter extends ArrayAdapter {
 
-    public ProcessesAdapter(Context context, int resource/*, List<CMProcess> processes*/) {
+    public InfleetMenuAdapter(Context context, int resource) {
         super(context, resource);
-
     }
 
     @Override

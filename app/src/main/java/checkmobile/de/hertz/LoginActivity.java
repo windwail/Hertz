@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Intent menuIntent = new Intent(getApplicationContext(), SelectableListActivity.class );
-                Intent menuIntent = new Intent(getApplicationContext(), CarsActivity.class );
+                Intent menuIntent = new Intent(getApplicationContext(), StationActivity.class );
                 menuIntent.putExtra(SelectableListActivity.HELPER_EXTRA, new AccessoriesHelper());
                 startActivity(menuIntent);
             }

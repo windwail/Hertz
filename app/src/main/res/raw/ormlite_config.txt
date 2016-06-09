@@ -1,4 +1,24 @@
 # --table-start--
+dataClass=checkmobile.de.hertz.entity.Process
+tableName=process
+# --table-fields-start--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=date
+# --field-end--
+# --field-start--
+fieldName=variables
+dataPersister=SERIALIZABLE
+# --field-end--
+# --field-start--
+fieldName=finished
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
 dataClass=checkmobile.de.hertz.entity.InfleetStart
 tableName=infleetStart
 # --table-fields-start--

@@ -17,8 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
-
         <activity android:name=".LoginActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".MenuActivity">
         </activity>
@@ -43,10 +48,9 @@
         <activity android:name=".StartInfleetActivity_">
         </activity>
         <activity android:name=".CarInfleetActivity_">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
+        </activity>
+        <activity android:name=".StationActivity">
         </activity>
     </application>
 
