@@ -14,6 +14,9 @@ fieldName=createDate
 dataPersister=DATE_TIME
 # --field-end--
 # --field-start--
+fieldName=variablesGson
+# --field-end--
+# --field-start--
 fieldName=finished
 # --field-end--
 # --field-start--
@@ -42,6 +45,10 @@ fieldName=name
 # --field-start--
 fieldName=createDate
 dataPersister=DATE_TIME
+# --field-end--
+# --field-start--
+fieldName=variablesGson
+dataPersister=SERIALIZABLE
 # --field-end--
 # --field-start--
 fieldName=finished

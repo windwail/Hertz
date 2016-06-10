@@ -4,6 +4,8 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import org.joda.time.DateTime;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -37,7 +39,7 @@ public class Process implements Serializable{
     @DatabaseField(dataType = DataType.DATE_TIME)
     @Getter
     @Setter
-    private Date createDate;
+    private DateTime createDate;
 
     @DatabaseField
     @Getter

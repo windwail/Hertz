@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/truckLicensePlate"
-            android:layout_below="@+id/textView17"
+            android:layout_below="@+id/truckLicensePlate"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
 
@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/driverName"
-            android:layout_below="@+id/textView17"
+            android:layout_below="@+id/driverName"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
 
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/driverEmail"
-            android:layout_below="@+id/textView17"
+            android:layout_below="@+id/driverEmail"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
 
@@ -104,7 +104,7 @@
             android:layout_alignParentStart="true"/>
 
         <fragment
-            android:id="@+id/leftFront"
+            android:id="@+id/numberOfCars"
             android:name="checkmobile.de.hertz.fragment.CMNumberPicker"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:id="@+id/spinner"
+            android:id="@+id/generalCondition"
             android:background="@color/switch_thumb_normal_material_light"
             android:entries="@array/condition_list"/>
 

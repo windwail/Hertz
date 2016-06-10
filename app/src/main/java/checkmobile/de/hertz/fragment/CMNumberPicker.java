@@ -5,6 +5,9 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -53,6 +56,8 @@ public class CMNumberPicker extends Fragment {
 
     boolean buttons;
 
+    private  EditText edit;
+
     public static CMNumberPicker newInstance() {
         return new CMNumberPicker();
     }
@@ -75,13 +80,19 @@ public class CMNumberPicker extends Fragment {
             value = savedInstanceState.getFloat(VALUE);
         }
 
-
-
         TextView u = (TextView) v.findViewById(R.id.units);
         u.setText(units);
 
-        final EditText et = (EditText) v.findViewById(R.id.value);
-        et.setText(String.valueOf(value));
+        edit = (EditText) v.findViewById(R.id.value);
+
+        if(!decimal) {
+            edit.setInputType(InputType.TYPE_CLASS_NUMBER);
+            edit.setText(String.format("%d", (int) value));
+        } else {
+            edit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            edit.setText(String.format("%.02f", value));
+        }
+
 
         if(buttons) {
 
@@ -92,13 +103,14 @@ public class CMNumberPicker extends Fragment {
             plus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    value = Float.parseFloat(edit.getText().toString());
                     if ((value + step) <= maxValue) {
                         value += step;
 
                         if (decimal) {
-                            et.setText(String.format("%.02f", value));
+                            edit.setText(String.format("%.02f", value));
                         } else {
-                            et.setText(String.format("%d", (int) value));
+                            edit.setText(String.format("%d", (int) value));
                         }
                     }
                 }
@@ -107,12 +119,13 @@ public class CMNumberPicker extends Fragment {
             minus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    value = Float.parseFloat(edit.getText().toString());
                     if ((value - step) >= minValue) {
                         value -= step;
                         if (decimal) {
-                            et.setText(String.format("%.02f", value));
+                            edit.setText(String.format("%.02f", value));
                         } else {
-                            et.setText(String.format("%d", (int) value));
+                            edit.setText(String.format("%d", (int) value));
                         }
                     }
                 }
@@ -168,7 +181,7 @@ public class CMNumberPicker extends Fragment {
     }
 
     public float getValue() {
-        return value;
+        return Float.parseFloat( edit.getText().toString() );
     }
 
     public void setValue(float value) {

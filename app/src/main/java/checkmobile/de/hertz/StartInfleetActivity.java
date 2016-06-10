@@ -1,6 +1,8 @@
 package checkmobile.de.hertz;
 
 import android.support.v7.app.AppCompatActivity;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
@@ -10,15 +12,15 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.FragmentById;
+import org.androidannotations.annotations.ViewById;
 import org.joda.time.DateTime;
 
-import java.util.Date;
-import java.util.HashMap;
-
 import checkmobile.de.hertz.db.DatabaseHelper;
-import checkmobile.de.hertz.entity.InfleetStart;
 import checkmobile.de.hertz.entity.Process;
 import checkmobile.de.hertz.entity.ProcessGroup;
+import checkmobile.de.hertz.fragment.CMNumberPicker;
+import checkmobile.de.hertz.gson.GsonInfleetStart;
 
 @EActivity(R.layout.activity_start_infleet)
 public class StartInfleetActivity extends AppCompatActivity {
@@ -30,6 +32,24 @@ public class StartInfleetActivity extends AppCompatActivity {
     protected DatabaseHelper dbHelper;
 
     protected GsonBuilder gsonBuilder;
+
+    @ViewById
+    EditText deliveryNote;
+
+    @ViewById
+    EditText truckLicensePlate;
+
+    @ViewById
+    EditText driverName;
+
+    @ViewById
+    EditText driverEmail;
+
+    @FragmentById
+    CMNumberPicker numberOfCars;
+
+    @ViewById
+    Spinner generalCondition;
 
     @AfterViews
     public void afterViews() {
@@ -47,8 +67,15 @@ public class StartInfleetActivity extends AppCompatActivity {
         pg.setCreateDate(new DateTime());
         pg.setName("Infleeting start");
 
+        GsonInfleetStart gis = new GsonInfleetStart();
+        gis.setDriverName(driverName.getText().toString());
+        gis.setTruckLicensePlate(truckLicensePlate.getText().toString());
+        gis.setDriversEmail(driverEmail.getText().toString());
+        gis.setNumberOfCars((int)numberOfCars.getValue());
+        gis.setGeneralCondition(generalCondition.getSelectedItem().toString());
+        gis.setDeliveryNoteNo(deliveryNote.getText().toString());
 
-
+        pg.setVariablesGson(gsonBuilder.create().toJson(gis));
 
         processGroupDao.create(pg);
 
@@ -62,9 +89,9 @@ public class StartInfleetActivity extends AppCompatActivity {
             processDao.create(p);
         }
 
-        //processGroupDao.refresh(pg);
+        processGroupDao.refresh(pg);
 
-        Toast.makeText(getApplicationContext(), "size" + pg.getProcesses().size(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), pg.getVariablesGson(), Toast.LENGTH_LONG).show();
 
     }
 }

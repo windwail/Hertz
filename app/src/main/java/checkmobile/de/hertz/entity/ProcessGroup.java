@@ -46,7 +46,7 @@ public class ProcessGroup implements Serializable {
     @Setter
     private DateTime createDate;
 
-    @DatabaseField(dataType = DataType.SERIALIZABLE)
+    @DatabaseField
     @Getter
     @Setter
     String variablesGson;
@@ -56,7 +56,7 @@ public class ProcessGroup implements Serializable {
     @Setter
     private Boolean finished;
 
-    @DatabaseField(dataType=DataType.ENUM_INTEGER)
+    @DatabaseField(dataType=DataType.ENUM_STRING)
     @Getter
     @Setter
     private Type type;
