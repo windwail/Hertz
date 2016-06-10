@@ -2,24 +2,31 @@ package checkmobile.de.hertz.entity;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.Collection;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.Map;
 
 import checkmobile.de.hertz.dao.ProcessDao;
 import lombok.Getter;
 import lombok.Setter;
 
 @DatabaseTable(tableName = "process", daoClass = ProcessDao.class)
-public class Process {
+public class Process implements Serializable{
+
+    //Database Field for Table Student
+    @DatabaseField (generatedId = true)
+    @Getter
+    @Setter
+    private int id;
+
+
+    public Process(String carInfo) {
+    }
 
     public enum Type { INFLEET };
 
-    public Process(String processName) {
-        name = processName;
+    public Process() {
     }
 
     @DatabaseField
@@ -27,15 +34,15 @@ public class Process {
     @Setter
     private String name;
 
+    @DatabaseField(dataType = DataType.DATE_TIME)
+    @Getter
+    @Setter
+    private Date createDate;
+
     @DatabaseField
     @Getter
     @Setter
-    private Date date;
-
-    @DatabaseField(dataType = DataType.SERIALIZABLE)
-    @Getter
-    @Setter
-    Map<String, Object> variables;
+    String variablesGson;
 
     @DatabaseField
     @Getter
@@ -51,10 +58,5 @@ public class Process {
     @Getter
     @Setter
     private ProcessGroup parent;
-
-    @ForeignCollectionField
-    @Getter
-    @Setter
-    Collection<Process> processes;
 
 }

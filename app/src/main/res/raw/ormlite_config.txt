@@ -3,17 +3,56 @@ dataClass=checkmobile.de.hertz.entity.Process
 tableName=process
 # --table-fields-start--
 # --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
 fieldName=name
 # --field-end--
 # --field-start--
-fieldName=date
-# --field-end--
-# --field-start--
-fieldName=variables
-dataPersister=SERIALIZABLE
+fieldName=createDate
+dataPersister=DATE_TIME
 # --field-end--
 # --field-start--
 fieldName=finished
+# --field-end--
+# --field-start--
+fieldName=mandatory
+# --field-end--
+# --field-start--
+fieldName=parent
+columnName=parentGroup
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=checkmobile.de.hertz.entity.ProcessGroup
+tableName=processGroup
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=createDate
+dataPersister=DATE_TIME
+# --field-end--
+# --field-start--
+fieldName=finished
+# --field-end--
+# --field-start--
+fieldName=type
+dataPersister=ENUM_INTEGER
+# --field-end--
+# --field-start--
+fieldName=processes
+foreignCollection=true
 # --field-end--
 # --table-fields-end--
 # --table-end--

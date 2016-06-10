@@ -1,19 +1,19 @@
 package checkmobile.de.hertz.db;
 
-import java.sql.SQLException;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
-import checkmobile.de.hertz.dao.InfleetStartDao;
+import java.sql.SQLException;
+
 import checkmobile.de.hertz.entity.InfleetStart;
+import checkmobile.de.hertz.entity.Process;
+import checkmobile.de.hertz.entity.ProcessGroup;
 
 /**
  * Database helper class used to manage the creation and upgrading of your database. This class also usually provides
@@ -26,13 +26,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // any time you make changes to your database objects, you may have to increase the database version
     private static final int DATABASE_VERSION = 1;
 
-    // the DAO object we use to access the SimpleData table
-    private Dao<InfleetStart, Integer> simpleDao = null;
-    private RuntimeExceptionDao<InfleetStart, Integer> simpleRuntimeDao = null;
-
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
+    private RuntimeExceptionDao processDAO = null;
+    private RuntimeExceptionDao processGroupDAO = null;
 
     /**
      * This is called when the database is first created. Usually you should call createTable statements here to create
@@ -43,25 +42,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             Log.i(DatabaseHelper.class.getName(), "onCreate");
             TableUtils.createTable(connectionSource, InfleetStart.class);
+            TableUtils.createTable(connectionSource, Process.class);
+            TableUtils.createTable(connectionSource, ProcessGroup.class);
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
         }
-
-        // here we try inserting data in the on-create as a test
-        RuntimeExceptionDao<InfleetStart, Integer> dao = getSimpleDataDao();
-        long millis = System.currentTimeMillis();
-        // create some entries in the onCreate
-
-
-        InfleetStart simple = new InfleetStart();
-        simple.setCarCount(10);
-        simple.setDate(new java.util.Date());
-        //simple.setCarCount(10);
-        dao.create(simple);
-
-
-        Log.i(DatabaseHelper.class.getName(), "created new entries in onCreate: " + millis);
     }
 
     /**
@@ -73,6 +59,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
             TableUtils.dropTable(connectionSource, InfleetStart.class, true);
+            TableUtils.dropTable(connectionSource, Process.class, true);
+            TableUtils.dropTable(connectionSource, ProcessGroup.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
         } catch (SQLException e) {
@@ -82,24 +70,23 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
 
-    /**
-     * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our SimpleData class. It will
-     * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
-     */
-    public RuntimeExceptionDao<InfleetStart, Integer> getSimpleDataDao() {
-        if (simpleRuntimeDao == null) {
-            simpleRuntimeDao = getRuntimeExceptionDao(InfleetStart.class);
+    public RuntimeExceptionDao getProcessGroupDAO(){
+        if(processGroupDAO == null){
+            processGroupDAO = getRuntimeExceptionDao(ProcessGroup.class);
         }
-        return simpleRuntimeDao;
+        return processGroupDAO;
+
     }
 
-    /**
-     * Close the database connections and clear any cached DAOs.
-     */
-    @Override
-    public void close() {
-        super.close();
-        simpleDao = null;
-        simpleRuntimeDao = null;
+    public RuntimeExceptionDao getProcessDAO(){
+        if(processDAO == null){
+            processDAO = getRuntimeExceptionDao(Process.class);
+        }
+        return processDAO;
+
     }
+
+
+
+
 }

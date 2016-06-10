@@ -3,59 +3,68 @@ package checkmobile.de.hertz;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.j256.ormlite.dao.Dao;
+import com.google.gson.GsonBuilder;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.EApplication;
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.ormlite.annotations.OrmLiteDao;
+import org.joda.time.DateTime;
 
-import java.sql.SQLException;
 import java.util.Date;
-import java.util.Random;
+import java.util.HashMap;
 
-import checkmobile.de.hertz.applicaton.MyApplication_;
-import checkmobile.de.hertz.dao.InfleetStartDao;
 import checkmobile.de.hertz.db.DatabaseHelper;
 import checkmobile.de.hertz.entity.InfleetStart;
+import checkmobile.de.hertz.entity.Process;
 import checkmobile.de.hertz.entity.ProcessGroup;
-import lombok.Getter;
-import lombok.Setter;
 
 @EActivity(R.layout.activity_start_infleet)
 public class StartInfleetActivity extends AppCompatActivity {
 
-    @OrmLiteDao(helper = DatabaseHelper.class)
-    @Getter
-    @Setter
-    protected InfleetStartDao infleetStartDao;
+    protected RuntimeExceptionDao processGroupDao;
 
+    protected RuntimeExceptionDao processDao;
+
+    protected DatabaseHelper dbHelper;
+
+    protected GsonBuilder gsonBuilder;
+
+    @AfterViews
+    public void afterViews() {
+        dbHelper = OpenHelperManager.getHelper(this,DatabaseHelper.class);
+        processDao = dbHelper.getProcessDAO();
+        processGroupDao = dbHelper.getProcessGroupDAO();
+        gsonBuilder = new GsonBuilder();
+    }
 
     @Click
     public void startButton() {
-        int duration = Toast.LENGTH_SHORT;
 
-        InfleetStart start = new InfleetStart();
-        start.setCarCount((int)Math.round(Math.random()*10));
-        start.setDate(new Date());
-        start.setDriverName("Vasya "+(int)Math.round(Math.random()*1000));
-        start.setFinished(false);
+        ProcessGroup pg = new ProcessGroup(ProcessGroup.Type.INFLEET);
+        pg.setFinished(true);
+        pg.setCreateDate(new DateTime());
+        pg.setName("Infleeting start");
 
 
-        ProcessGroup pg = new ProcessGroup();
 
 
-        MyApplication_ app = (MyApplication_) getApplication();
+        processGroupDao.create(pg);
 
-
-        try {
-            infleetStartDao.create(start);
-
-            Toast toast = Toast.makeText(getApplicationContext(), "HIHIHI!"+infleetStartDao.countOf(), duration);
-            toast.show();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        for(int i=0; i<3; i++) {
+            Process p = new Process();
+            p.setName("Process "+i);
+            p.setFinished(true);
+            p.setCreateDate(new DateTime());
+            p.setMandatory(true);
+            p.setParent(pg);
+            processDao.create(p);
         }
+
+        //processGroupDao.refresh(pg);
+
+        Toast.makeText(getApplicationContext(), "size" + pg.getProcesses().size(), Toast.LENGTH_LONG).show();
+
     }
 }
