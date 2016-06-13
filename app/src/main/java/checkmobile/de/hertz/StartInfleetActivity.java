@@ -1,5 +1,6 @@
 package checkmobile.de.hertz;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -14,6 +15,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.api.bundle.BundleHelper;
 import org.joda.time.DateTime;
 
 import checkmobile.de.hertz.db.DatabaseHelper;
@@ -24,6 +26,8 @@ import checkmobile.de.hertz.gson.GsonInfleetStart;
 
 @EActivity(R.layout.activity_start_infleet)
 public class StartInfleetActivity extends AppCompatActivity {
+
+    public static final String PROCESS_GROUP_ID = "process_group_id";
 
     protected RuntimeExceptionDao processGroupDao;
 
@@ -57,6 +61,9 @@ public class StartInfleetActivity extends AppCompatActivity {
         processDao = dbHelper.getProcessDAO();
         processGroupDao = dbHelper.getProcessGroupDAO();
         gsonBuilder = new GsonBuilder();
+
+
+
     }
 
     @Click
@@ -77,7 +84,7 @@ public class StartInfleetActivity extends AppCompatActivity {
 
         pg.setVariablesGson(gsonBuilder.create().toJson(gis));
 
-        processGroupDao.create(pg);
+        int group_id = processGroupDao.create(pg);
 
         for(int i=0; i<3; i++) {
             Process p = new Process();
@@ -86,12 +93,18 @@ public class StartInfleetActivity extends AppCompatActivity {
             p.setCreateDate(new DateTime());
             p.setMandatory(true);
             p.setParent(pg);
+
             processDao.create(p);
         }
 
         processGroupDao.refresh(pg);
 
         Toast.makeText(getApplicationContext(), pg.getVariablesGson(), Toast.LENGTH_LONG).show();
+
+        finish();
+        Intent i = new Intent(getApplicationContext(), ProcessesActivity.class);
+        i.putExtra(PROCESS_GROUP_ID, group_id);
+        startActivity(i);
 
     }
 }

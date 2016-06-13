@@ -11,9 +11,17 @@
     <color name="colorAccent">#c8e8ff</color>
     <color name="text_lgray">#808080</color>
     <color name="text_gray">#323232</color>
-    <color name="light_green">#6f99cc00</color>
+    <color name="light_green">#4299cc00</color>
     <color name="white">#ffffff</color>
 
+
+    <!-- Black 87% -->
+    <color name="primary_text">#de000000</color>
+    <!-- Black 54% -->
+    <color name="secondary_text">#8a000000</color>
+
+    <!-- action bar icon color -->
+    <color name="ab_icon_color">#ffffff</color>
 
 
 </resources>

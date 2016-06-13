@@ -1,7 +1,6 @@
 package checkmobile.de.hertz;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -9,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import checkmobile.de.hertz.domain.CMAccessory;
 import checkmobile.de.hertz.helper.AccessoriesHelper;
 
 public class LoginActivity extends AppCompatActivity {

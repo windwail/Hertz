@@ -2,7 +2,7 @@ package checkmobile.de.hertz.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,35 +13,37 @@ import android.widget.TextView;
 import java.util.List;
 
 import checkmobile.de.hertz.R;
-import checkmobile.de.hertz.domain.CMProcess;
-import checkmobile.de.hertz.helper.ProcessesHelper;
+import checkmobile.de.hertz.entity.Process;
 
 
 /**
  * Created by icetusk on 23.05.16.
  */
-public class ProcessesAdapter extends ArrayAdapter {
+public class ProcessesAdapter extends ArrayAdapter<Process> {
 
-    public ProcessesAdapter(Context context, int resource/*, List<CMProcess> processes*/) {
+    List<Process> processes;
+
+    Context context;
+
+    public ProcessesAdapter(Context context, int resource , List<Process> processes) {
         super(context, resource);
-
+        this.processes = processes;
+        this.context = context;
     }
 
     @Override
-    public Object getItem(int position) {
-        return ProcessesHelper.getList().get(position);
+    public Process getItem(int position) {
+        return processes.get(position);
     }
 
     public int getCount(){
-        return ProcessesHelper.getList().size();
+        return processes.size();
     }
 
     static class DataHandler
     {
         TextView title;
-
-        ImageView doneIcon;
-
+        ImageView imageIcon;
     }
 
     @Override
@@ -49,7 +51,7 @@ public class ProcessesAdapter extends ArrayAdapter {
         View row;
         row=convertView;
 
-        CMProcess process = ProcessesHelper.getList().get(position);
+        Process process = processes.get(position);
 
         DataHandler handler;
         if(convertView==null)
@@ -58,7 +60,7 @@ public class ProcessesAdapter extends ArrayAdapter {
             row=inflater.inflate(R.layout.process_element,parent,false);
             handler=new DataHandler();
             handler.title=(TextView)row.findViewById(R.id.process);
-            //handler.doneIcon= (ImageView)row.findViewById(R.id.doneIcon);
+            handler.imageIcon= (ImageView)row.findViewById(R.id.imageIcon);
             row.setTag(handler);
         }
         else {
@@ -67,13 +69,17 @@ public class ProcessesAdapter extends ArrayAdapter {
 
         handler.title.setText(process.getName());
 
-        if(process.isRequired()) {
-            handler.title.setTypeface(null, Typeface.BOLD);
+        if(process.isMandatory()) {
+           // handler.title.setTypeface(null, Typeface.BOLD);
         }
 
         if(process.isFinished()) {
             //handler.doneIcon.setVisibility(process.isFinished() ? View.VISIBLE : View.INVISIBLE);
-            row.setBackgroundColor(Color.parseColor("#6f99cc00"));
+            row.setBackgroundColor(Color.parseColor("#4299cc00"));
+
+            handler.imageIcon.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_ok) );
+        } else{
+            handler.imageIcon.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_empty) );
         }
 
 

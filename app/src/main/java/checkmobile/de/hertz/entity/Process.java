@@ -14,19 +14,31 @@ import lombok.Getter;
 import lombok.Setter;
 
 @DatabaseTable(tableName = "process", daoClass = ProcessDao.class)
-public class Process implements Serializable{
+public class Process implements Serializable {
 
     //Database Field for Table Student
-    @DatabaseField (generatedId = true)
+    @DatabaseField(generatedId = true)
     @Getter
     @Setter
     private int id;
 
-
     public Process(String carInfo) {
+        name = carInfo;
     }
 
-    public enum Type { INFLEET };
+    public enum Type {
+        VEHICLE_ACCESSORIES,
+        REMOVED_ACCESSORIES,
+        MECHANICAL_FAULTS,
+        TYRE_PRESSURE,
+        CAPTURE_MILEAGE,
+        CAPTURE_FUEL,
+        OVERVIEW_PHOTOS,
+        PARKING,
+        DAMAGE,
+        CAR_INFO
+    }
+
 
     public Process() {
     }
@@ -35,6 +47,11 @@ public class Process implements Serializable{
     @Getter
     @Setter
     private String name;
+
+    @DatabaseField(dataType = DataType.ENUM_STRING)
+    @Getter
+    @Setter
+    private Type type;
 
     @DatabaseField(dataType = DataType.DATE_TIME)
     @Getter
@@ -49,14 +66,14 @@ public class Process implements Serializable{
     @DatabaseField
     @Getter
     @Setter
-    private Boolean finished;
+    private boolean finished;
 
     @DatabaseField
     @Getter
     @Setter
-    private Boolean mandatory;
+    private boolean mandatory;
 
-    @DatabaseField (foreign = true, foreignAutoRefresh = true, columnName = "parentGroup")
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "parentGroup")
     @Getter
     @Setter
     private ProcessGroup parent;

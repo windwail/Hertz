@@ -19,11 +19,7 @@
         tools:replace="android:theme">
         <activity android:name=".LoginActivity">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".MenuActivity">
         </activity>
@@ -32,6 +28,7 @@
         <activity android:name=".CarInfoActivity">
         </activity>
         <activity android:name=".ProcessesActivity">
+
         </activity>
         <activity android:name=".DamageActivity">
         </activity>
@@ -45,7 +42,12 @@
         </activity>
         <activity android:name=".CaptureFuelActivity">
         </activity>
-        <activity android:name=".StartInfleetActivity_">
+        <activity android:name=".StartInfleetActivity_" android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".CarInfleetActivity_">
 
