@@ -12,58 +12,49 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import checkmobile.de.hertz.activity.CMActivity;
 import checkmobile.de.hertz.adapter.ProcessesAdapter;
 import checkmobile.de.hertz.db.DatabaseHelper;
 import checkmobile.de.hertz.entity.Process;
 import checkmobile.de.hertz.entity.ProcessGroup;
 import checkmobile.de.hertz.helper.ProcessesHelper;
 
-public class ProcessesActivity extends AppCompatActivity {
+public class ProcessesActivity extends CMActivity {
 
     ListView listView;
 
-    Collection<Process> processes;
+    List<Process> processes;
 
-    protected RuntimeExceptionDao processGroupDao;
+    protected void initAdapter() {
+        super.initData();
 
-    protected RuntimeExceptionDao processDao;
+        processes = Arrays.asList(processGroup.getProcesses().toArray(new Process[]{}));
 
-    protected DatabaseHelper dbHelper;
+        ProcessesAdapter adapter = new ProcessesAdapter(getApplicationContext(), R.layout.process_element, processes);
+        listView.setAdapter(adapter);
 
-    protected ProcessGroup pg;
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                Intent myIntent = new Intent(view.getContext(), ProcessesHelper.getActivityClass(processes.get(position)));
+                myIntent.putExtra(ProcessesHelper.PROCESS_ID, processes.get(position).getId());
+                ProcessesActivity.this.startActivity(myIntent);
+            }
+        });
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_processes);
 
-        dbHelper = OpenHelperManager.getHelper(this,DatabaseHelper.class);
-        processDao = dbHelper.getProcessDAO();
-        processGroupDao = dbHelper.getProcessGroupDAO();
-
         listView=(ListView)findViewById(R.id.list_view);
 
-        int group_id = getIntent().getIntExtra(StartInfleetActivity.PROCESS_GROUP_ID, -1);
-
-        pg = (ProcessGroup) processGroupDao.queryForId(group_id);
-
-        processes = pg.getProcesses();
-
-        ProcessesAdapter adapter = new ProcessesAdapter(getApplicationContext(), R.layout.process_element, new ArrayList<Process>(processes));
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                //Intent myIntent = new Intent(view.getContext(), ProcessesHelper.getList().get(position).getActivityClass());
-
-              // processes.
-
-               // ProcessesActivity.this.startActivity(myIntent);
-            }
-        });
+        initAdapter();
 
         Button done = (Button) findViewById(R.id.doneButton);
 
@@ -74,5 +65,11 @@ public class ProcessesActivity extends AppCompatActivity {
                 //startActivity(menuIntent);
             }
         });
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        initAdapter();
     }
 }

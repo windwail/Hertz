@@ -36,11 +36,6 @@ public class ProcessGroup implements Serializable {
     @Setter
     private int id;
 
-    @DatabaseField
-    @Getter
-    @Setter
-    private String name;
-
     @DatabaseField(dataType = DataType.DATE_TIME)
     @Getter
     @Setter
@@ -56,7 +51,7 @@ public class ProcessGroup implements Serializable {
     @Setter
     private Boolean finished;
 
-    @DatabaseField(dataType=DataType.ENUM_STRING)
+    @DatabaseField(dataType=DataType.ENUM_STRING, canBeNull = false)
     @Getter
     @Setter
     private Type type;
@@ -68,4 +63,13 @@ public class ProcessGroup implements Serializable {
     Collection<Process> processes = new ArrayList<>();
 
 
+    public Process constructProcess(Process.Type type) {
+        Process p = new Process();
+        p.setCreateDate(new DateTime());
+        p.setMandatory(true);
+        p.setParent(this);
+        p.setFinished(false);
+        p.setType(type);
+        return p;
+    }
 }

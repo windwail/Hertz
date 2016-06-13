@@ -7,7 +7,9 @@ fieldName=id
 generatedId=true
 # --field-end--
 # --field-start--
-fieldName=name
+fieldName=type
+dataPersister=ENUM_STRING
+canBeNull=false
 # --field-end--
 # --field-start--
 fieldName=createDate
@@ -63,9 +65,6 @@ fieldName=id
 generatedId=true
 # --field-end--
 # --field-start--
-fieldName=name
-# --field-end--
-# --field-start--
 fieldName=createDate
 dataPersister=DATE_TIME
 # --field-end--
@@ -78,6 +77,7 @@ fieldName=finished
 # --field-start--
 fieldName=type
 dataPersister=ENUM_STRING
+canBeNull=false
 # --field-end--
 # --field-start--
 fieldName=processes

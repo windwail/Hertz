@@ -67,7 +67,7 @@ public class ProcessesAdapter extends ArrayAdapter<Process> {
             handler=(DataHandler)row.getTag();
         }
 
-        handler.title.setText(process.getName());
+        handler.title.setText(process.getType().toString());
 
         if(process.isMandatory()) {
            // handler.title.setTypeface(null, Typeface.BOLD);

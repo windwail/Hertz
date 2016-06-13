@@ -12,7 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import org.androidannotations.annotations.EActivity;
 
 @EActivity
-public class CarInfleetActivity extends AppCompatActivity {
+public class CarInfleetTabsActivity extends AppCompatActivity {
 
 
     @Override
@@ -22,7 +22,7 @@ public class CarInfleetActivity extends AppCompatActivity {
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new CarInfleetPagerAdapter(getSupportFragmentManager(),
-                CarInfleetActivity.this));
+                CarInfleetTabsActivity.this));
 
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);

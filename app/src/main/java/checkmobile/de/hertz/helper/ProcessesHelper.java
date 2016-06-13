@@ -1,10 +1,13 @@
 package checkmobile.de.hertz.helper;
 
+import android.app.Activity;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import checkmobile.de.hertz.CaptureFuelActivity;
 import checkmobile.de.hertz.CaptureMileageActivity;
+import checkmobile.de.hertz.CarInfoInfleetActivity_;
 import checkmobile.de.hertz.DamageActivity;
 import checkmobile.de.hertz.EmptyActivity;
 import checkmobile.de.hertz.SelectableListActivity;
@@ -16,7 +19,11 @@ import checkmobile.de.hertz.entity.Process;
  */
 public class ProcessesHelper {
 
-    public static final Map<Process.Type, Class> mapping = new HashMap<>();
+    public static final String PROCESS_ID = "process_id";
+
+    public static final String PROCESS_GROUP_ID = "process_group_id";
+
+    public static final Map<Process.Type, Class<? extends Activity>> mapping = new HashMap<>();
 
     static {
         mapping.put(Process.Type.VEHICLE_ACCESSORIES, SelectableListActivity.class);
@@ -28,12 +35,16 @@ public class ProcessesHelper {
         mapping.put(Process.Type.OVERVIEW_PHOTOS, EmptyActivity.class);
         mapping.put(Process.Type.PARKING, EmptyActivity.class);
         mapping.put(Process.Type.DAMAGE, DamageActivity.class);
-        mapping.put(Process.Type.CAR_INFO, EmptyActivity.class);
+        mapping.put(Process.Type.CAR_INFO, CarInfoInfleetActivity_.class);
     }
 
 
-    public static Map<Process.Type, Class> getMapping() {
+    public static Map<Process.Type, Class<? extends Activity>> getMapping() {
         return mapping;
+    }
+
+    public static Class<? extends Activity> getActivityClass(Process p) {
+        return mapping.get(p.getType());
     }
 
 

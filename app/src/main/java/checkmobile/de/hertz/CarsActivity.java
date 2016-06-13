@@ -25,7 +25,7 @@ public class CarsActivity extends AppCompatActivity {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                Intent myIntent = new Intent(view.getContext(), CarInfoActivity.class);
+                Intent myIntent = new Intent(view.getContext(), CarInfoOverviewActivity.class);
                 startActivity(myIntent);
             }
         });

@@ -23,11 +23,10 @@ import checkmobile.de.hertz.entity.Process;
 import checkmobile.de.hertz.entity.ProcessGroup;
 import checkmobile.de.hertz.fragment.CMNumberPicker;
 import checkmobile.de.hertz.gson.GsonInfleetStart;
+import checkmobile.de.hertz.helper.ProcessesHelper;
 
 @EActivity(R.layout.activity_start_infleet)
 public class StartInfleetActivity extends AppCompatActivity {
-
-    public static final String PROCESS_GROUP_ID = "process_group_id";
 
     protected RuntimeExceptionDao processGroupDao;
 
@@ -61,9 +60,6 @@ public class StartInfleetActivity extends AppCompatActivity {
         processDao = dbHelper.getProcessDAO();
         processGroupDao = dbHelper.getProcessGroupDAO();
         gsonBuilder = new GsonBuilder();
-
-
-
     }
 
     @Click
@@ -72,7 +68,6 @@ public class StartInfleetActivity extends AppCompatActivity {
         ProcessGroup pg = new ProcessGroup(ProcessGroup.Type.INFLEET);
         pg.setFinished(true);
         pg.setCreateDate(new DateTime());
-        pg.setName("Infleeting start");
 
         GsonInfleetStart gis = new GsonInfleetStart();
         gis.setDriverName(driverName.getText().toString());
@@ -86,16 +81,10 @@ public class StartInfleetActivity extends AppCompatActivity {
 
         int group_id = processGroupDao.create(pg);
 
-        for(int i=0; i<3; i++) {
-            Process p = new Process();
-            p.setName("Process "+i);
-            p.setFinished(true);
-            p.setCreateDate(new DateTime());
-            p.setMandatory(true);
-            p.setParent(pg);
-
-            processDao.create(p);
-        }
+        processDao.create(pg.constructProcess(Process.Type.CAR_INFO));
+        processDao.create(pg.constructProcess(Process.Type.CAPTURE_MILEAGE));
+        processDao.create(pg.constructProcess(Process.Type.CAPTURE_FUEL));
+        processDao.create(pg.constructProcess(Process.Type.DAMAGE));
 
         processGroupDao.refresh(pg);
 
@@ -103,7 +92,7 @@ public class StartInfleetActivity extends AppCompatActivity {
 
         finish();
         Intent i = new Intent(getApplicationContext(), ProcessesActivity.class);
-        i.putExtra(PROCESS_GROUP_ID, group_id);
+        i.putExtra(ProcessesHelper.PROCESS_GROUP_ID, group_id);
         startActivity(i);
 
     }

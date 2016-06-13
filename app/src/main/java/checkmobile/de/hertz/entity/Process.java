@@ -16,16 +16,6 @@ import lombok.Setter;
 @DatabaseTable(tableName = "process", daoClass = ProcessDao.class)
 public class Process implements Serializable {
 
-    //Database Field for Table Student
-    @DatabaseField(generatedId = true)
-    @Getter
-    @Setter
-    private int id;
-
-    public Process(String carInfo) {
-        name = carInfo;
-    }
-
     public enum Type {
         VEHICLE_ACCESSORIES,
         REMOVED_ACCESSORIES,
@@ -39,16 +29,17 @@ public class Process implements Serializable {
         CAR_INFO
     }
 
-
     public Process() {
     }
 
-    @DatabaseField
+
+    //Database Field for Table Student
+    @DatabaseField(generatedId = true)
     @Getter
     @Setter
-    private String name;
+    private int id;
 
-    @DatabaseField(dataType = DataType.ENUM_STRING)
+    @DatabaseField(dataType = DataType.ENUM_STRING, canBeNull = false)
     @Getter
     @Setter
     private Type type;

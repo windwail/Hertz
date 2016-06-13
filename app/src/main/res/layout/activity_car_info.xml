@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="checkmobile.de.hertz.CarInfoActivity"
+    tools:context=".CarInfoOverviewActivity"
     style="@style/Base.TextAppearance.AppCompat.Large.Inverse">
 
     <TextView
