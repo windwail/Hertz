@@ -9,18 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Exchanger;
 
 import checkmobile.de.hertz.R;
 
@@ -65,7 +62,8 @@ public class ImageAdapter extends ArrayAdapter<File> {
         row=convertView;
 
         final DataHandler handler;
-        if(convertView==null)
+
+        if(convertView==null || convertView.getTag() == null)
         {
             LayoutInflater inflater=(LayoutInflater)this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row=inflater.inflate(R.layout.image_element,parent,false);
@@ -74,36 +72,38 @@ public class ImageAdapter extends ArrayAdapter<File> {
             //handler.comment=(TextView) row.findViewById(R.id.comment);
             row.setTag(handler);
 
-
             final File file = list.get(position);
 
-            Log.e(getClass().getName(), "Position" + position + "Init file:"+file.getName());
-            setPic(handler.image, file);
+            transformPic(file);
 
             handler.delete = (ImageButton) row.findViewById(R.id.buttonDelete);
 
             handler.delete.setOnClickListener(new View.OnClickListener() {
 
-                private File file;
-
-                {
-                    this.file =  list.get(position);
-                }
-
                 @Override
                 public void onClick(View v) {
-                    Log.e(getClass().getName(), "Remove file:"+file.getName());
-                    list.remove(this.file);
+                    list.remove(file);
                     notifyDataSetInvalidated();
                 }
             });
+        } else {
+            handler = (DataHandler)row.getTag();
         }
+
+
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        Bitmap bitmap = BitmapFactory.decodeFile(list.get(position).getAbsolutePath(), bmOptions);
+        Log.e(getClass().getName(), "Bitmap width:"+bitmap.getWidth());
+        Log.e(getClass().getName(), "Bitmap height:"+bitmap.getHeight());
+        handler.image.setImageBitmap(bitmap);
 
         return row;
     }
 
 
-    private void setPic(ImageView mImageView, File file) {
+    private void transformPic(File file) {
         // Get initial metrics
         DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -134,16 +134,5 @@ public class ImageAdapter extends ArrayAdapter<File> {
             Log.e(getClass().getName(), e.getMessage(), e);
         }
 
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions);
-
-        Log.e(getClass().getName(), "Bitmap width:"+bitmap.getWidth());
-        Log.e(getClass().getName(), "Bitmap height:"+bitmap.getHeight());
-
-        mImageView.setImageBitmap(bitmap);
     }
 }

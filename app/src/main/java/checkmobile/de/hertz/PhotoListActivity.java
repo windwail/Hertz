@@ -69,6 +69,15 @@ public class PhotoListActivity extends AppCompatActivity {
         adapter = new ImageAdapter(getApplicationContext(), R.layout.image_element);
         listView.setAdapter(adapter);
 
+        FloatingActionButton save = (FloatingActionButton) findViewById(R.id.save);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
