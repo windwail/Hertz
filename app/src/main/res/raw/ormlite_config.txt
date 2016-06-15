@@ -30,28 +30,37 @@ columnName=parentGroup
 foreign=true
 foreignAutoRefresh=true
 # --field-end--
+# --field-start--
+fieldName=images
+foreignCollection=true
+# --field-end--
 # --table-fields-end--
 # --table-end--
 #################################
 # --table-start--
-dataClass=checkmobile.de.hertz.entity.InfleetStart
-tableName=infleetStart
+dataClass=checkmobile.de.hertz.entity.Image
+tableName=image
 # --table-fields-start--
 # --field-start--
-fieldName=Id
+fieldName=id
 generatedId=true
 # --field-end--
 # --field-start--
-fieldName=date
+fieldName=createDate
+dataPersister=DATE_TIME
 # --field-end--
 # --field-start--
-fieldName=finished
+fieldName=variablesGson
 # --field-end--
 # --field-start--
-fieldName=carCount
+fieldName=parentGroup
+foreign=true
+foreignAutoRefresh=true
 # --field-end--
 # --field-start--
-fieldName=driverName
+fieldName=parentProcess
+foreign=true
+foreignAutoRefresh=true
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -82,6 +91,33 @@ canBeNull=false
 # --field-start--
 fieldName=processes
 foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=images
+foreignCollection=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=checkmobile.de.hertz.entity.InfleetStart
+tableName=infleetStart
+# --table-fields-start--
+# --field-start--
+fieldName=Id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=date
+# --field-end--
+# --field-start--
+fieldName=finished
+# --field-end--
+# --field-start--
+fieldName=carCount
+# --field-end--
+# --field-start--
+fieldName=driverName
 # --field-end--
 # --table-fields-end--
 # --table-end--

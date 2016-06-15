@@ -9,6 +9,9 @@
 
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 
     <application
         android:name=".applicaton.MyApplication_"
@@ -18,8 +21,6 @@
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
         <activity android:name=".LoginActivity">
-
-
         </activity>
         <activity android:name=".MenuActivity">
         </activity>
@@ -28,7 +29,6 @@
         <activity android:name=".CarInfoOverviewActivity">
         </activity>
         <activity android:name=".ProcessesActivity">
-
         </activity>
         <activity android:name=".DamageActivity">
         </activity>
@@ -42,22 +42,29 @@
         </activity>
         <activity android:name=".CaptureFuelActivity">
         </activity>
-        <activity android:name=".StartInfleetActivity_" android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        <activity
+            android:name=".StartInfleetActivity_"
+            android:windowSoftInputMode="adjustPan">
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
-        <activity android:name=".CarInfleetActivity_">
-
+        <activity android:name=".CarInfleetTabsActivity_">
         </activity>
         <activity android:name=".StationActivity">
         </activity>
         <activity android:name=".CarInfoInfleetActivity_">
         </activity>
+        <activity
+            android:name=".PhotoListActivity"
+            android:label="@string/title_activity_photo_list"
+            android:theme="@style/AppTheme.NoActionBar">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>

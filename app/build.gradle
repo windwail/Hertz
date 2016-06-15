@@ -29,9 +29,6 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
 
-
-
-
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
 
@@ -39,10 +36,12 @@ dependencies {
     compile "org.androidannotations:ormlite-api:$AAVersion"
 
     apt "org.projectlombok:lombok:1.16.6"
-
+    compile 'org.projectlombok:lombok:1.16.6'
 
 
     compile 'javax.annotation:jsr250-api:1.0'
+
+    // Android support libs
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
@@ -52,20 +51,25 @@ dependencies {
     compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
     compile 'com.github.bmelnychuk:atv:1.2.+'
     compile 'com.github.johnkil.print:print:1.3.1'
+
+    // SVG stuff
     compile 'com.pixplicity.sharp:library:1.0.2@aar'
 
 
     compile 'com.appyvet:materialrangebar:1.3'
     compile 'com.j256.ormlite:ormlite-android:4.48'
 
-    compile 'org.projectlombok:lombok:1.16.6'
+
+
+    // for debug purposes
     compile 'com.facebook.stetho:stetho:1.3.1'
 
+    // Gson transformations
     compile 'com.google.code.gson:gson:2.6.2'
 
+    // time library
     compile 'joda-time:joda-time:2.9.4'
 
-    compile 'com.github.medyo:fancybuttons:1.8.1'
 
 }
 

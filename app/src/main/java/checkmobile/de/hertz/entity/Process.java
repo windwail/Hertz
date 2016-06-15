@@ -2,11 +2,14 @@ package checkmobile.de.hertz.entity;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import checkmobile.de.hertz.dao.ProcessDao;
@@ -68,5 +71,10 @@ public class Process implements Serializable {
     @Getter
     @Setter
     private ProcessGroup parent;
+
+    @ForeignCollectionField
+    @Getter
+    @Setter
+    Collection<Image> images = new ArrayList<>();
 
 }
