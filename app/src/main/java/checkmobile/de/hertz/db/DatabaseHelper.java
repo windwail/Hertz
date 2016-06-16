@@ -11,6 +11,7 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
+import checkmobile.de.hertz.entity.Image;
 import checkmobile.de.hertz.entity.InfleetStart;
 import checkmobile.de.hertz.entity.Process;
 import checkmobile.de.hertz.entity.ProcessGroup;
@@ -24,7 +25,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // name of the database file for your application -- change to something appropriate for your app
     private static final String DATABASE_NAME = "helloAndroid.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 33;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,8 +43,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             Log.i(DatabaseHelper.class.getName(), "onCreate");
             TableUtils.createTable(connectionSource, InfleetStart.class);
-            TableUtils.createTable(connectionSource, Process.class);
             TableUtils.createTable(connectionSource, ProcessGroup.class);
+            TableUtils.createTable(connectionSource, Process.class);
+            TableUtils.createTable(connectionSource, Image.class);
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -59,6 +61,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
             TableUtils.dropTable(connectionSource, InfleetStart.class, true);
+            TableUtils.dropTable(connectionSource, Image.class, true);
             TableUtils.dropTable(connectionSource, Process.class, true);
             TableUtils.dropTable(connectionSource, ProcessGroup.class, true);
             // after we drop the old databases, we create the new ones

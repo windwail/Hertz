@@ -53,12 +53,8 @@ dataPersister=DATE_TIME
 fieldName=variablesGson
 # --field-end--
 # --field-start--
-fieldName=parentGroup
-foreign=true
-foreignAutoRefresh=true
-# --field-end--
-# --field-start--
-fieldName=parentProcess
+fieldName=process
+columnName=process
 foreign=true
 foreignAutoRefresh=true
 # --field-end--
@@ -90,10 +86,6 @@ canBeNull=false
 # --field-end--
 # --field-start--
 fieldName=processes
-foreignCollection=true
-# --field-end--
-# --field-start--
-fieldName=images
 foreignCollection=true
 # --field-end--
 # --table-fields-end--

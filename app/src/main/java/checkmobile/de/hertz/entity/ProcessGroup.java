@@ -62,11 +62,6 @@ public class ProcessGroup implements Serializable {
     @Setter
     Collection<Process> processes = new ArrayList<>();
 
-    @ForeignCollectionField
-    @Getter
-    @Setter
-    Collection<Image> images = new ArrayList<>();
-
 
 
     public Process constructProcess(Process.Type type) {

@@ -6,6 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import org.joda.time.DateTime;
 
+import checkmobile.de.hertz.dao.ImageDao;
 import checkmobile.de.hertz.dao.ProcessDao;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,7 @@ import lombok.Setter;
  * Created by icetusk on 15.06.16.
  */
 
-@DatabaseTable(tableName = "image", daoClass = ProcessDao.class)
+@DatabaseTable(tableName = "image", daoClass = ImageDao.class)
 public class Image {
 
     //Database Field for Table Student
@@ -33,13 +34,8 @@ public class Image {
     @Setter
     String variablesGson;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "process")
     @Getter
     @Setter
-    private ProcessGroup parentGroup;
-
-    @DatabaseField(foreign = true, foreignAutoRefresh = true)
-    @Getter
-    @Setter
-    private ProcessGroup parentProcess;
+    private Process process;
 }

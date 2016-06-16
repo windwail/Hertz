@@ -5,14 +5,15 @@ import com.j256.ormlite.support.ConnectionSource;
 
 import java.sql.SQLException;
 
+import checkmobile.de.hertz.entity.Image;
 import checkmobile.de.hertz.entity.InfleetStart;
 
 /**
  * Created by icetusk on 15.06.16.
  */
-public class ImageDao extends BaseDaoImpl<InfleetStart, Integer> {
+public class ImageDao extends BaseDaoImpl<Image, Integer> {
 
     public ImageDao(ConnectionSource connectionSource) throws SQLException {
-        super(connectionSource, InfleetStart.class);
+        super(connectionSource, Image.class);
     }
 }
