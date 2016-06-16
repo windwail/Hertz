@@ -9,9 +9,8 @@
 
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
 
     <application
         android:name=".applicaton.MyApplication_"
@@ -45,7 +44,6 @@
         <activity
             android:name=".StartInfleetActivity_"
             android:windowSoftInputMode="adjustPan">
-
         </activity>
         <activity android:name=".CarInfleetTabsActivity_">
         </activity>
@@ -58,12 +56,13 @@
             android:label="@string/title_activity_photo_list"
             android:theme="@style/AppTheme.NoActionBar">
 
+        </activity>
+        <activity android:name=".DamageListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
     </application>
 
