@@ -79,7 +79,9 @@ public class StartInfleetActivity extends AppCompatActivity {
 
         pg.setVariablesGson(gsonBuilder.create().toJson(gis));
 
-        int group_id = processGroupDao.create(pg);
+        if(processGroupDao.create(pg) != 1) {
+            throw new RuntimeException("Cant create processGroup in StratrInfleet activity.");
+        };
 
         processDao.create(pg.constructProcess(Process.Type.CAR_INFO));
         processDao.create(pg.constructProcess(Process.Type.CAPTURE_MILEAGE));
@@ -92,7 +94,7 @@ public class StartInfleetActivity extends AppCompatActivity {
 
         finish();
         Intent i = new Intent(getApplicationContext(), ProcessesActivity.class);
-        i.putExtra(ProcessesHelper.PROCESS_GROUP_ID, group_id);
+        i.putExtra(ProcessesHelper.PROCESS_GROUP_ID, pg.getId());
         startActivity(i);
 
     }

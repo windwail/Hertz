@@ -16,4 +16,6 @@ public class ProcessGroupDao extends BaseDaoImpl<ProcessGroup, Integer> {
         super(connectionSource, ProcessGroup.class);
     }
 
+
+
 }

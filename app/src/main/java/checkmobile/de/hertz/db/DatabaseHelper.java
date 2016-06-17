@@ -5,14 +5,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
 import checkmobile.de.hertz.entity.Image;
-import checkmobile.de.hertz.entity.InfleetStart;
 import checkmobile.de.hertz.entity.Process;
 import checkmobile.de.hertz.entity.ProcessGroup;
 
@@ -33,6 +34,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private RuntimeExceptionDao processDAO = null;
     private RuntimeExceptionDao processGroupDAO = null;
+    private RuntimeExceptionDao imageDAO = null;
+    private RuntimeExceptionDao infleetStartDAO = null;
 
     /**
      * This is called when the database is first created. Usually you should call createTable statements here to create
@@ -42,7 +45,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
         try {
             Log.i(DatabaseHelper.class.getName(), "onCreate");
-            TableUtils.createTable(connectionSource, InfleetStart.class);
             TableUtils.createTable(connectionSource, ProcessGroup.class);
             TableUtils.createTable(connectionSource, Process.class);
             TableUtils.createTable(connectionSource, Image.class);
@@ -60,7 +62,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
-            TableUtils.dropTable(connectionSource, InfleetStart.class, true);
             TableUtils.dropTable(connectionSource, Image.class, true);
             TableUtils.dropTable(connectionSource, Process.class, true);
             TableUtils.dropTable(connectionSource, ProcessGroup.class, true);
@@ -89,7 +90,27 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     }
 
+    public RuntimeExceptionDao getImageDAO(){
+        if(imageDAO == null){
+            imageDAO = getRuntimeExceptionDao(Image.class);
+        }
+        return imageDAO;
+    }
 
-
+    public int queryLast() {
+        QueryBuilder<ProcessGroup, Integer> qb = getProcessGroupDAO().queryBuilder().selectRaw("max(id)");
+        String[] columns = new String[0];
+        try {
+            GenericRawResults<String[]> results = getProcessGroupDAO().queryRaw(qb.prepareStatementString());
+            columns = results.getFirstResult();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (columns.length == 0) {
+            // NOTE: there are not any rows in table
+            return 0;
+        }
+        return Integer.parseInt(columns[0]);
+    }
 
 }

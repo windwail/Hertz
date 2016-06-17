@@ -2,6 +2,7 @@ package checkmobile.de.hertz.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -43,12 +44,14 @@ public class CMActivity extends AppCompatActivity {
 
             if(process_id > 0) {
                 process = (Process) processDao.queryForId(process_id);
+                Log.e("DEBUG:","Loaded process "+process.getId());
             }
 
             processGroup_id = i.getIntExtra(ProcessesHelper.PROCESS_GROUP_ID, -1);
 
             if(processGroup_id > 0) {
                 processGroup = (ProcessGroup) processGroupDao.queryForId(processGroup_id);
+                Log.e("DEBUG:","Loaded group "+processGroup.getId());
             }
         }
     }

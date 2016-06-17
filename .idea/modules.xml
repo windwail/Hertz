@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Hertz.iml" filepath="$PROJECT_DIR$/Hertz.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/checkmobile-common/checkmobile-common.iml" filepath="$PROJECT_DIR$/checkmobile-common/checkmobile-common.iml" />
     </modules>
   </component>
 </project>

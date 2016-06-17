@@ -6,7 +6,6 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
 
 import checkmobile.de.hertz.entity.Image;
-import checkmobile.de.hertz.entity.InfleetStart;
 
 /**
  * Created by icetusk on 15.06.16.
