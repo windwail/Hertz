@@ -74,6 +74,8 @@ public class PhotoListActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = PhotoListActivity.this.getIntent();
+                PhotoListActivity.this.setResult(RESULT_OK, intent);
                 finish();
             }
         });
@@ -103,7 +105,6 @@ public class PhotoListActivity extends AppCompatActivity {
                 } else {
                     dispatchTakePictureIntent();
                 }
-
 
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG) .setAction("Action", null).show();
             }

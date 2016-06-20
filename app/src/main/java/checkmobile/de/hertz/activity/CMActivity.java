@@ -1,6 +1,8 @@
 package checkmobile.de.hertz.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -54,5 +56,11 @@ public class CMActivity extends AppCompatActivity {
                 Log.e("DEBUG:","Loaded group "+processGroup.getId());
             }
         }
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initData();
     }
 }

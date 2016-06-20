@@ -20,12 +20,10 @@
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
         <activity android:name=".LoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
         <activity android:name=".MenuActivity">
         </activity>
@@ -36,7 +34,6 @@
         <activity android:name=".ProcessesActivity">
         </activity>
         <activity android:name=".DamageActivity">
-
         </activity>
         <activity android:name=".EmptyActivity">
         </activity>
@@ -61,10 +58,15 @@
         <activity
             android:name=".PhotoListActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
         <activity android:name=".DamageListActivity">
 
+        </activity>
+        <activity android:name=".DamageDetailsActivity">
+        </activity>
+        <activity android:name=".CarInfleetOverview">
+        </activity>
+        <activity android:name=".DriverSignature">
         </activity>
     </application>
 

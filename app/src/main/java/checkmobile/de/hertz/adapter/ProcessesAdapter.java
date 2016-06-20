@@ -75,8 +75,7 @@ public class ProcessesAdapter extends ArrayAdapter<Process> {
 
         if(process.isFinished()) {
             //handler.doneIcon.setVisibility(process.isFinished() ? View.VISIBLE : View.INVISIBLE);
-            row.setBackgroundColor(Color.parseColor("#4299cc00"));
-
+            //row.setBackgroundColor(Color.parseColor("#4299cc00"));
             handler.imageIcon.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_ok) );
         } else{
             handler.imageIcon.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_empty) );

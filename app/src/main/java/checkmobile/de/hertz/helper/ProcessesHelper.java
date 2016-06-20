@@ -9,6 +9,7 @@ import checkmobile.de.hertz.CaptureFuelActivity;
 import checkmobile.de.hertz.CaptureMileageActivity;
 import checkmobile.de.hertz.CarInfoInfleetActivity_;
 import checkmobile.de.hertz.DamageActivity;
+import checkmobile.de.hertz.DamageListActivity;
 import checkmobile.de.hertz.EmptyActivity;
 import checkmobile.de.hertz.SelectableListActivity;
 import checkmobile.de.hertz.TyrePressure;
@@ -34,7 +35,7 @@ public class ProcessesHelper {
         mapping.put(Process.Type.CAPTURE_FUEL, CaptureFuelActivity.class);
         mapping.put(Process.Type.OVERVIEW_PHOTOS, EmptyActivity.class);
         mapping.put(Process.Type.PARKING, EmptyActivity.class);
-        mapping.put(Process.Type.DAMAGE, DamageActivity.class);
+        mapping.put(Process.Type.DAMAGE, DamageListActivity.class);
         mapping.put(Process.Type.CAR_INFO, CarInfoInfleetActivity_.class);
     }
 

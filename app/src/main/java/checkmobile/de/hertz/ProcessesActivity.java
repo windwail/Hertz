@@ -26,6 +26,8 @@ import checkmobile.de.hertz.helper.ProcessesHelper;
 
 public class ProcessesActivity extends CMActivity {
 
+
+
     ListView listView;
 
     List<Process> processes;
@@ -64,8 +66,8 @@ public class ProcessesActivity extends CMActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent menuIntent = new Intent(getApplicationContext(), DamageActivity.class);
-                //startActivity(menuIntent);
+                Intent menuIntent = new Intent(getApplicationContext(), CarInfleetOverview.class);
+                startActivityForResult(menuIntent, FINISH_INFLEET);
             }
         });
     }
@@ -74,5 +76,22 @@ public class ProcessesActivity extends CMActivity {
     protected void onPostResume() {
         super.onPostResume();
         initAdapter();
+    }
+
+    public static final int FINISH_INFLEET = 0;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == FINISH_INFLEET) {
+
+            if( resultCode == RESULT_OK) {
+                Intent intent = this.getIntent();
+                this.setResult(RESULT_OK, intent);
+            }
+            finish();
+
+        }
     }
 }

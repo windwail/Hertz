@@ -227,7 +227,7 @@ public class CustomImageView extends ImageView{
 
         @Override
         public boolean onDown(MotionEvent e) {
-            Log.d("s Tap", "s at: ");
+            //Log.d("s Tap", "s at: ");
             return true;
         }
         // event when double tap occurs
@@ -236,7 +236,7 @@ public class CustomImageView extends ImageView{
             float x = e.getX();
             float y = e.getY();
 
-            Log.d("Double Tap", "Tapped at: (" + x + "," + y + ")");
+            //Log.d("Double Tap", "Tapped at: (" + x + "," + y + ")");
 
             return true;
         }
@@ -253,6 +253,7 @@ public class CustomImageView extends ImageView{
                 Log.e("** DOUBLE TAP**", " second tap ");
 
 
+                /*
                 for(String id: cache.keySet()) {
                     PathInfo pi = cache.get(id);
 
@@ -262,6 +263,7 @@ public class CustomImageView extends ImageView{
                 }
 
                 invalidate();
+                */
 
                 firstTouch = false;
 
@@ -270,6 +272,15 @@ public class CustomImageView extends ImageView{
                 time = System.currentTimeMillis();
                 Log.e("** SINGLE  TAP**", " First Tap time  " + time);
 
+                for(String id: cache.keySet()) {
+                    PathInfo pi = cache.get(id);
+
+                    if(pi.region.contains((int)event.getX(), (int)event.getY())) {
+                        pi.selected = !pi.selected;
+                    }
+                }
+
+                invalidate();
 
 
 
