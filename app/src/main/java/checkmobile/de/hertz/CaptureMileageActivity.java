@@ -1,5 +1,6 @@
 package checkmobile.de.hertz;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import checkmobile.de.hertz.activity.CMActivity;
+import checkmobile.de.hertz.helper.ProcessesHelper;
 
 public class CaptureMileageActivity extends CMActivity {
 
@@ -28,11 +30,15 @@ public class CaptureMileageActivity extends CMActivity {
         inDate.setText(currentDateTimeString);
         outDae.setText(currentDateTimeString);
 
-        Button save = (Button) findViewById(R.id.save);
+        Button save = (Button) findViewById(R.id.saveButton);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
 
+                process.setFinished(true);
+                processDao.update(process);
+
+                finish();
             }
         });
     }

@@ -23,8 +23,13 @@ public class DamageActivity extends AppCompatActivity {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+
+            //TODO: Disable PAN.Think what to do with it.
+            /*
             Log.e(TAG, "Scrolled "+distanceX+ " " + distanceY);
             imageView.setPan(-distanceX, -distanceY);
+            */
+
             return true;
         }
 
@@ -38,16 +43,15 @@ public class DamageActivity extends AppCompatActivity {
         imageView = (CustomImageView) findViewById(R.id.imageView);
 
         SGD = new ScaleGestureDetector(this,new ScaleListener());
-
         GD = new GestureDetector(this, mGestureListener);
-
-
 
     }
 
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
+
+
         SGD.onTouchEvent(event);
         GD.onTouchEvent(event);
 
@@ -57,9 +61,14 @@ public class DamageActivity extends AppCompatActivity {
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
+
+            // TODO: Should be done by buttons
+            // Now it is disabled.
+            /*
             scale *= detector.getScaleFactor();
             scale = Math.max(0.5f, Math.min(scale, 10f));
             imageView.setScale(scale);
+            */
             return true;
         }
 

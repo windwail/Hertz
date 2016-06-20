@@ -10,10 +10,14 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class CaptureFuelActivity extends AppCompatActivity {
+import checkmobile.de.hertz.activity.CMActivity;
+
+public class CaptureFuelActivity extends CMActivity {
 
     TextView label;
 
@@ -21,6 +25,8 @@ public class CaptureFuelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capture_fuel);
+
+        super.initData();
 
         label = (TextView) findViewById(R.id.fuelText);
 
@@ -137,6 +143,18 @@ public class CaptureFuelActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+            }
+        });
+
+        Button saveButton = (Button) findViewById(R.id.saveButton);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                process.setFinished(true);
+                processDao.update(process);
+                finish();
             }
         });
 
