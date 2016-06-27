@@ -6,7 +6,7 @@ import lombok.Setter;
 /**
  * Created by icetusk on 10.06.16.
  */
-public class GsonInfleetStart {
+public class GsonInfleetStart extends CMGson{
 
     @Getter
     @Setter

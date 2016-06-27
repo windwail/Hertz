@@ -8,7 +8,6 @@ import java.util.Map;
 import checkmobile.de.hertz.CaptureFuelActivity;
 import checkmobile.de.hertz.CaptureMileageActivity;
 import checkmobile.de.hertz.CarInfoInfleetActivity_;
-import checkmobile.de.hertz.DamageActivity;
 import checkmobile.de.hertz.DamageListActivity;
 import checkmobile.de.hertz.EmptyActivity;
 import checkmobile.de.hertz.SelectableListActivity;
@@ -21,6 +20,10 @@ import checkmobile.de.hertz.entity.Process;
 public class ProcessesHelper {
 
     public static final String PROCESS_ID = "process_id";
+
+    public static final String CAR_INDEX = "car_index";
+
+    public static final String CAR_COUNT = "car_count";
 
     public static final String PROCESS_GROUP_ID = "process_group_id";
 

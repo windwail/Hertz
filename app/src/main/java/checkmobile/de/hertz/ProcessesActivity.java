@@ -8,9 +8,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,18 +29,31 @@ import checkmobile.de.hertz.helper.ProcessesHelper;
 
 public class ProcessesActivity extends CMActivity {
 
-
-
     ListView listView;
 
     List<Process> processes;
 
+    protected ProcessGroup currentCarProcesssesGroup;
+
+    protected ArrayList<ProcessGroup> neighborGroups;
+
+    protected int carIndex;
+
+    protected int carCount;
+
+    protected Button prev;
+
+    protected Button next;
+
+
+    protected TextView label;
+
+
     protected void initAdapter() {
-        super.initData();
 
-        Log.e("LAST","id:"+dbHelper.queryLast());
+        processGroupDao.update(currentCarProcesssesGroup);
 
-        processes = Arrays.asList(processGroup.getProcesses().toArray(new Process[]{}));
+        processes =  new ArrayList<>(currentCarProcesssesGroup.getProcesses());
 
         ProcessesAdapter adapter = new ProcessesAdapter(getApplicationContext(), R.layout.process_element, processes);
         listView.setAdapter(adapter);
@@ -57,19 +73,40 @@ public class ProcessesActivity extends CMActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_processes);
 
+        Intent i = getIntent();
+
+        carIndex = i.getIntExtra(ProcessesHelper.CAR_INDEX, -1);
+
+        carCount =  i.getIntExtra(ProcessesHelper.CAR_COUNT, -1);
+
+        neighborGroups = new ArrayList<>(processGroup.getGroups());
+
+        currentCarProcesssesGroup = neighborGroups.get(carIndex);
+
         listView=(ListView)findViewById(R.id.list_view);
+
+        prev = (Button)findViewById(R.id.prev);
+
+        next = (Button)findViewById(R.id.next);
+
+        label = (TextView)findViewById(R.id.title);
+
+
+
+
+        if(carIndex >= carCount) {
+            next.setText("FINISH");
+        }
+
+        if(carIndex == 0) {
+            prev.setText("CANCEL");
+        }
+
+        label.setText("Car "+carIndex+ " of "+carCount);
 
         initAdapter();
 
-        Button done = (Button) findViewById(R.id.doneButton);
 
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent menuIntent = new Intent(getApplicationContext(), CarInfleetOverview.class);
-                startActivityForResult(menuIntent, FINISH_INFLEET);
-            }
-        });
     }
 
     @Override
@@ -92,6 +129,35 @@ public class ProcessesActivity extends CMActivity {
             }
             finish();
 
+        }
+    }
+
+    public void onPrev(View button) {
+        finish();
+
+        if(carIndex == 0) {
+            // do nothing;
+        } else {
+            Intent i = new Intent(getApplicationContext(), ProcessesActivity.class);
+            i.putExtra(ProcessesHelper.PROCESS_GROUP_ID, processGroup.getId());
+            i.putExtra(ProcessesHelper.CAR_INDEX, carIndex - 1);
+            i.putExtra(ProcessesHelper.CAR_COUNT, carCount);
+            startActivity(i);
+        }
+    }
+
+    public void onNext(View button) {
+        finish();
+
+        if(carIndex >= carCount) {
+            Intent menuIntent = new Intent(getApplicationContext(), CarInfleetOverview.class);
+            startActivityForResult(menuIntent, FINISH_INFLEET);
+        } else {
+            Intent i = new Intent(getApplicationContext(), ProcessesActivity.class);
+            i.putExtra(ProcessesHelper.PROCESS_GROUP_ID, processGroup.getId());
+            i.putExtra(ProcessesHelper.CAR_INDEX, carIndex + 1);
+            i.putExtra(ProcessesHelper.CAR_COUNT, carCount);
+            startActivity(i);
         }
     }
 }

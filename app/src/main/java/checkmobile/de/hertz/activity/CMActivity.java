@@ -33,6 +33,8 @@ public class CMActivity extends AppCompatActivity {
 
     protected int processGroup_id;
 
+
+
     protected void initData() {
         dbHelper = OpenHelperManager.getHelper(this,DatabaseHelper.class);
         processDao = dbHelper.getProcessDAO();
@@ -56,6 +58,9 @@ public class CMActivity extends AppCompatActivity {
                 Log.e("DEBUG:","Loaded group "+processGroup.getId());
             }
         }
+
+
+
     }
 
     @Override

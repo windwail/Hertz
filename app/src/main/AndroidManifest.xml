@@ -68,6 +68,9 @@
         </activity>
         <activity android:name=".DriverSignature">
         </activity>
+        <activity android:name=".ExploreActivity">
+
+        </activity>
     </application>
 
 </manifest>

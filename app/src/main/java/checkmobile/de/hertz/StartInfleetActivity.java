@@ -22,6 +22,7 @@ import checkmobile.de.hertz.db.DatabaseHelper;
 import checkmobile.de.hertz.entity.Process;
 import checkmobile.de.hertz.entity.ProcessGroup;
 import checkmobile.de.hertz.fragment.CMNumberPicker;
+import checkmobile.de.hertz.gson.GsonInfleet;
 import checkmobile.de.hertz.gson.GsonInfleetStart;
 import checkmobile.de.hertz.helper.ProcessesHelper;
 
@@ -66,7 +67,7 @@ public class StartInfleetActivity extends AppCompatActivity {
     public void startButton() {
 
         ProcessGroup pg = new ProcessGroup(ProcessGroup.Type.INFLEET);
-        pg.setFinished(true);
+        pg.setFinished(false);
         pg.setCreateDate(new DateTime());
 
         GsonInfleetStart gis = new GsonInfleetStart();
@@ -81,20 +82,38 @@ public class StartInfleetActivity extends AppCompatActivity {
 
         if(processGroupDao.create(pg) != 1) {
             throw new RuntimeException("Cant create processGroup in StratrInfleet activity.");
-        };
+        }
 
-        processDao.create(pg.constructProcess(Process.Type.CAR_INFO));
-        processDao.create(pg.constructProcess(Process.Type.CAPTURE_MILEAGE));
-        processDao.create(pg.constructProcess(Process.Type.CAPTURE_FUEL));
-        processDao.create(pg.constructProcess(Process.Type.DAMAGE));
+        // Create ProcessGroup for each car. It will contain all processes.
+        for(int i=0; i < (int)numberOfCars.getValue(); i++ ) {
+            ProcessGroup carProcessGroup = new ProcessGroup(ProcessGroup.Type.INFLEET);
+            carProcessGroup.setFinished(false);
+            carProcessGroup.setCreateDate(new DateTime());
+            carProcessGroup.setParent(pg);
 
-        processGroupDao.refresh(pg);
+            GsonInfleet gson = new GsonInfleet();
+            gson.setIndex(i);
+            gson.setCarsCount((int)numberOfCars.getValue());
 
-        Toast.makeText(getApplicationContext(), pg.getVariablesGson(), Toast.LENGTH_LONG).show();
+            carProcessGroup.setVariables(gson);
+            processGroupDao.create(carProcessGroup);
+
+            processDao.create(carProcessGroup.constructProcess(Process.Type.CAR_INFO));
+            processDao.create(carProcessGroup.constructProcess(Process.Type.CAPTURE_MILEAGE));
+            processDao.create(carProcessGroup.constructProcess(Process.Type.CAPTURE_FUEL));
+            processDao.create(carProcessGroup.constructProcess(Process.Type.DAMAGE));
+
+
+            //processGroupDao.refresh(pg);
+        }
+
+        //Toast.makeText(getApplicationContext(), pg.getVariablesGson(), Toast.LENGTH_LONG).show();
 
         finish();
         Intent i = new Intent(getApplicationContext(), ProcessesActivity.class);
         i.putExtra(ProcessesHelper.PROCESS_GROUP_ID, pg.getId());
+        i.putExtra(ProcessesHelper.CAR_INDEX, 0);
+        i.putExtra(ProcessesHelper.CAR_COUNT, (int)numberOfCars.getValue());
         startActivity(i);
 
     }

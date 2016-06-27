@@ -14,12 +14,17 @@ import java.util.Date;
 import java.util.Map;
 
 import checkmobile.de.hertz.dao.ProcessGroupDao;
+import checkmobile.de.hertz.gson.CMGson;
+import checkmobile.de.hertz.gson.GsonHelper;
+import checkmobile.de.hertz.gson.GsonInfleet;
+import checkmobile.de.hertz.gson.GsonInfleetStart;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @DatabaseTable(tableName = "processGroup", daoClass = ProcessGroupDao.class)
 public class ProcessGroup implements Serializable {
+
 
     public ProcessGroup(Type type) {
         this.type = type;
@@ -28,13 +33,18 @@ public class ProcessGroup implements Serializable {
     public ProcessGroup() {
     }
 
-    public enum Type { INFLEET };
+    public enum Type { INFLEET, INFLEET_CHILD };
 
     //Database Field for Table Student
     @DatabaseField (generatedId = true)
     @Getter
     @Setter
     private int id;
+
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "parentGroup")
+    @Getter
+    @Setter
+    private ProcessGroup parent;
 
     @DatabaseField(dataType = DataType.DATE_TIME)
     @Getter
@@ -62,7 +72,28 @@ public class ProcessGroup implements Serializable {
     @Setter
     Collection<Process> processes = new ArrayList<>();
 
+    @ForeignCollectionField
+    @Getter
+    @Setter
+    Collection<ProcessGroup> groups = new ArrayList<>();
 
+
+    public void setVariables(CMGson gson) {
+        variablesGson = gson.toString();
+    }
+
+    public Object getVariables() {
+        Class varsClazz = null;
+        switch (type) {
+            case INFLEET:
+                varsClazz = GsonInfleetStart.class;
+                break;
+            case INFLEET_CHILD:
+                varsClazz = GsonInfleet.class;
+                break;
+        }
+        return GsonHelper.getBuilder().fromJson(variablesGson, varsClazz);
+    }
 
     public Process constructProcess(Process.Type type) {
         Process p = new Process();
