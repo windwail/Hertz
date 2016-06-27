@@ -5,7 +5,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import org.joda.time.DateTime;
 
@@ -19,37 +23,21 @@ import java.util.Date;
  */
 public class GsonHelper {
 
-    public static Gson getBuilder() {
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
+    final static DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        /*
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(API_BASE_URL)
-                .setConverter(new GsonConverter(gson))
-                .build();
-                */
+    public static Gson getBuilder() {
 
         final GsonBuilder builder = new GsonBuilder();
 
-        builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-
-            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        builder.registerTypeAdapter(DateTime.class, new JsonSerializer<DateTime>() {
             @Override
-            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                try {
-                    return df.parse(json.getAsString());
-                } catch (final java.text.ParseException e) {
-                    e.printStackTrace();
-                    return null;
-                }
+            public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {
+                    return new JsonPrimitive(src.toString());
             }
         });
 
-        builder.registerTypeAdapter(DateTime.class, new JsonDeserializer<DateTime>() {
 
-            final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        builder.registerTypeAdapter(DateTime.class, new JsonDeserializer<DateTime>() {
             @Override
             public DateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
                 try {

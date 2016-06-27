@@ -92,9 +92,7 @@ public class ProcessesActivity extends CMActivity {
         label = (TextView)findViewById(R.id.title);
 
 
-
-
-        if(carIndex >= carCount) {
+        if(carIndex+1 >= carCount) {
             next.setText("FINISH");
         }
 
@@ -102,7 +100,7 @@ public class ProcessesActivity extends CMActivity {
             prev.setText("CANCEL");
         }
 
-        label.setText("Car "+carIndex+ " of "+carCount);
+        label.setText("Car "+(carIndex+1)+ " of "+carCount);
 
         initAdapter();
 
@@ -135,7 +133,7 @@ public class ProcessesActivity extends CMActivity {
     public void onPrev(View button) {
         finish();
 
-        if(carIndex == 0) {
+        if(carIndex+1 == 0) {
             // do nothing;
         } else {
             Intent i = new Intent(getApplicationContext(), ProcessesActivity.class);
@@ -149,7 +147,7 @@ public class ProcessesActivity extends CMActivity {
     public void onNext(View button) {
         finish();
 
-        if(carIndex >= carCount) {
+        if(carIndex+1 >= carCount) {
             Intent menuIntent = new Intent(getApplicationContext(), CarInfleetOverview.class);
             startActivityForResult(menuIntent, FINISH_INFLEET);
         } else {

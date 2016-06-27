@@ -12,38 +12,48 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 import checkmobile.de.hertz.R;
+import checkmobile.de.hertz.dao.ProcessDao;
+import checkmobile.de.hertz.entity.Process;
+import checkmobile.de.hertz.gson.Damage;
+import checkmobile.de.hertz.gson.GsonHelper;
 
 /**
  * Created by icetusk on 16.06.16.
  */
 public class DamageAdapter extends RecyclerView.Adapter<DamageAdapter.ViewHolder> {
-    private String[] mDataset;
+
 
     private Context context;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
+    private List<Damage> damages;
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public ImageView mImageView;
+        protected GridLayout vGridLayout;
+
         public ViewHolder(View v) {
             super(v);
+            vGridLayout = (GridLayout) v.findViewById(R.id.imagesGrid);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public DamageAdapter(String[] myDataset, Context context) {
-        mDataset = myDataset;
+    public DamageAdapter(List<Damage> damages, Context context) {
         this.context = context;
+        this.damages = damages;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public DamageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
+    public DamageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,int i) {
 
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -54,9 +64,14 @@ public class DamageAdapter extends RecyclerView.Adapter<DamageAdapter.ViewHolder
         // set the view's size, margins, paddings and layout parameters
         // ...
 
+
+
         GridLayout gv = (GridLayout) v.findViewById(R.id.imagesGrid);
         //gv.setAdapter(new ImageGridAdapter(context));
-        for(int i=0; i < 5; i++) {
+
+
+
+        for(String d: damages.get(i).getImages()) {
             ImageView iv = new ImageView(v.getContext());
 
             gv.addView(iv);
@@ -90,7 +105,7 @@ public class DamageAdapter extends RecyclerView.Adapter<DamageAdapter.ViewHolder
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return damages.size();
     }
 }
 

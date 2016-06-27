@@ -7,8 +7,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.gson.reflect.TypeToken;
+
+import org.joda.time.DateTime;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 import checkmobile.de.hertz.activity.CMActivity;
 import checkmobile.de.hertz.adapter.DamageAdapter;
+import checkmobile.de.hertz.gson.Damage;
+import checkmobile.de.hertz.gson.GsonHelper;
 import checkmobile.de.hertz.helper.ProcessesHelper;
 
 public class DamageListActivity extends CMActivity {
@@ -18,6 +28,17 @@ public class DamageListActivity extends CMActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private ArrayList<Damage> damages;
+
+    private void updateDamages() {
+        Type listType = new TypeToken<List<Damage>>(){}.getType();
+        damages = GsonHelper.getBuilder().fromJson(process.getVariablesGson(), listType);
+
+        if(damages == null) {
+            damages = new ArrayList<>();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +57,8 @@ public class DamageListActivity extends CMActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new DamageAdapter(new String[]{"","",""}, getApplicationContext());
+        updateDamages();
+        mAdapter = new DamageAdapter(damages, getApplicationContext());
         mRecyclerView.setAdapter(mAdapter);
 
         Button addDamage = (Button) findViewById(R.id.addDamage);
@@ -45,9 +67,28 @@ public class DamageListActivity extends CMActivity {
         addDamage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                /*
                 Intent myIntent = new Intent(view.getContext(), DamageActivity.class);
                 myIntent.putExtra(ProcessesHelper.PROCESS_ID, process.getId());
                 DamageListActivity.this.startActivityForResult(myIntent, CREATE_DAMAGE);
+                */
+
+                Damage damage = new Damage();
+                damage.setArea("Area");
+                damage.setComment("Comment");
+                damage.setImages(new String[]{"img1", "img2"});
+                damage.setPiece("Piece");
+                damage.setRegisterDate(new DateTime());
+                damage.setSeverity("Severity");
+
+                damages.add(damage);
+
+                process.setVariablesGson(GsonHelper.getBuilder().toJson(damages));
+
+                processDao.update(process);
+
+                mAdapter.notifyDataSetChanged();
 
             }
         });

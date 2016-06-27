@@ -19,7 +19,7 @@
         android:layout_below="@+id/addDamage"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/button3"/>
+        android:layout_above="@+id/saveButton"/>
 
     <Button
         android:layout_width="match_parent"

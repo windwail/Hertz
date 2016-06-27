@@ -70,6 +70,12 @@ fieldName=id
 generatedId=true
 # --field-end--
 # --field-start--
+fieldName=parent
+columnName=parentGroup
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --field-start--
 fieldName=createDate
 dataPersister=DATE_TIME
 # --field-end--
@@ -86,6 +92,10 @@ canBeNull=false
 # --field-end--
 # --field-start--
 fieldName=processes
+foreignCollection=true
+# --field-end--
+# --field-start--
+fieldName=groups
 foreignCollection=true
 # --field-end--
 # --table-fields-end--
