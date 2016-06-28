@@ -25,9 +25,14 @@ import checkmobile.de.hertz.adapter.ProcessesAdapter;
 import checkmobile.de.hertz.db.DatabaseHelper;
 import checkmobile.de.hertz.entity.Process;
 import checkmobile.de.hertz.entity.ProcessGroup;
+import checkmobile.de.hertz.gson.Damage;
 import checkmobile.de.hertz.helper.ProcessesHelper;
 
 public class ProcessesActivity extends CMActivity {
+
+    public static final int PROCESS_TYPE_SHIFT = 1000;
+
+    public static final int FINISH_INFLEET = 0;
 
     ListView listView;
 
@@ -62,7 +67,7 @@ public class ProcessesActivity extends CMActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Intent myIntent = new Intent(view.getContext(), ProcessesHelper.getActivityClass(processes.get(position)));
                 myIntent.putExtra(ProcessesHelper.PROCESS_ID, processes.get(position).getId());
-                ProcessesActivity.this.startActivity(myIntent);
+                ProcessesActivity.this.startActivityForResult(myIntent,processes.get(position).getType().ordinal()+PROCESS_TYPE_SHIFT);
             }
         });
 
@@ -113,20 +118,51 @@ public class ProcessesActivity extends CMActivity {
         initAdapter();
     }
 
-    public static final int FINISH_INFLEET = 0;
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if(requestCode == FINISH_INFLEET) {
-
             if( resultCode == RESULT_OK) {
                 Intent intent = this.getIntent();
                 this.setResult(RESULT_OK, intent);
+                finish();
             }
-            finish();
+        }
 
+        Process.Type type = null;
+
+        if(requestCode >= PROCESS_TYPE_SHIFT && requestCode <= (Process.Type.values().length + PROCESS_TYPE_SHIFT))  {
+            type = Process.Type.values()[requestCode-PROCESS_TYPE_SHIFT];
+        }
+
+        switch(type) {
+            case OVERVIEW_PHOTOS:
+
+                String[] images = data.getStringArrayExtra("images");
+
+                process = (Process) processDao.queryForId(data.getIntExtra(ProcessesHelper.PROCESS_ID, -1));
+
+                for()
+
+
+                String[] images = data.getStringArrayExtra("images");
+
+                for(Damage d: damages) {
+                    if(d.getUid().equalsIgnoreCase(damage.getUid())) {
+                        damage = d;
+                        break;
+                    }
+                }
+
+                damage.setImages(images);
+
+                process.setDamages(damages);
+                processDao.update(process);
+
+
+                break;
         }
     }
 

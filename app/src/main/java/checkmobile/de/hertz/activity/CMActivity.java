@@ -1,5 +1,7 @@
 package checkmobile.de.hertz.activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,9 +11,13 @@ import android.util.Log;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
+import java.util.List;
+
+import checkmobile.de.hertz.DamageDetailsActivity;
 import checkmobile.de.hertz.db.DatabaseHelper;
 import checkmobile.de.hertz.entity.Process;
 import checkmobile.de.hertz.entity.ProcessGroup;
+import checkmobile.de.hertz.gson.Damage;
 import checkmobile.de.hertz.helper.ProcessesHelper;
 
 /**
@@ -32,7 +38,6 @@ public class CMActivity extends AppCompatActivity {
     protected int process_id;
 
     protected int processGroup_id;
-
 
 
     protected void initData() {
@@ -58,9 +63,19 @@ public class CMActivity extends AppCompatActivity {
                 Log.e("DEBUG:","Loaded group "+processGroup.getId());
             }
         }
+    }
 
+    protected Intent getIntent(Class<? extends Activity> a, Context c) {
 
+        Intent myIntent = new Intent(c, a);
+        if(process != null) {
+            myIntent.putExtra(ProcessesHelper.PROCESS_ID, process.getId());
+        }
+        if(processGroup != null) {
+            myIntent.putExtra(ProcessesHelper.PROCESS_GROUP_ID, processGroup.getId());
+        }
 
+        return  myIntent;
     }
 
     @Override
@@ -68,4 +83,6 @@ public class CMActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initData();
     }
+
+
 }

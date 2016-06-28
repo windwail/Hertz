@@ -2,6 +2,8 @@ package checkmobile.de.hertz.gson;
 
 import org.joda.time.DateTime;
 
+import java.util.UUID;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +13,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Damage extends CMGson {
+
+    public Damage() {
+        uid = UUID.randomUUID().toString();
+    }
+
+    private String uid;
 
     private DateTime registerDate;
 

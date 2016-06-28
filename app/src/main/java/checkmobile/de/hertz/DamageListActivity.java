@@ -7,18 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.gson.reflect.TypeToken;
-
-import org.joda.time.DateTime;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import checkmobile.de.hertz.activity.CMActivity;
 import checkmobile.de.hertz.adapter.DamageAdapter;
+import checkmobile.de.hertz.entity.Process;
 import checkmobile.de.hertz.gson.Damage;
-import checkmobile.de.hertz.gson.GsonHelper;
 import checkmobile.de.hertz.helper.ProcessesHelper;
 
 public class DamageListActivity extends CMActivity {
@@ -29,15 +24,19 @@ public class DamageListActivity extends CMActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private ArrayList<Damage> damages;
+    private List<Damage> damages;
 
     private void updateDamages() {
-        Type listType = new TypeToken<List<Damage>>(){}.getType();
-        damages = GsonHelper.getBuilder().fromJson(process.getVariablesGson(), listType);
+        process = (Process) processDao.queryForId(process_id);
+        damages = process.getDamages();
 
-        if(damages == null) {
+
+        if (damages == null) {
             damages = new ArrayList<>();
         }
+
+        mAdapter = new DamageAdapter(damages, getApplicationContext());
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -58,8 +57,6 @@ public class DamageListActivity extends CMActivity {
 
         // specify an adapter (see also next example)
         updateDamages();
-        mAdapter = new DamageAdapter(damages, getApplicationContext());
-        mRecyclerView.setAdapter(mAdapter);
 
         Button addDamage = (Button) findViewById(R.id.addDamage);
 
@@ -68,27 +65,31 @@ public class DamageListActivity extends CMActivity {
             @Override
             public void onClick(View view) {
 
-                /*
+
                 Intent myIntent = new Intent(view.getContext(), DamageActivity.class);
                 myIntent.putExtra(ProcessesHelper.PROCESS_ID, process.getId());
                 DamageListActivity.this.startActivityForResult(myIntent, CREATE_DAMAGE);
-                */
 
-                Damage damage = new Damage();
-                damage.setArea("Area");
-                damage.setComment("Comment");
-                damage.setImages(new String[]{"img1", "img2"});
-                damage.setPiece("Piece");
-                damage.setRegisterDate(new DateTime());
-                damage.setSeverity("Severity");
 
-                damages.add(damage);
 
-                process.setVariablesGson(GsonHelper.getBuilder().toJson(damages));
+                /* Just for test.
 
-                processDao.update(process);
+                 Damage damage = new Damage();
+                 damage.setArea("Area");
+                 damage.setComment("Comment");
+                 damage.setImages(new String[]{"img1", "img2"});
+                 damage.setPiece("Piece");
+                 damage.setRegisterDate(new DateTime());
+                 damage.setSeverity("Severity");
 
-                mAdapter.notifyDataSetChanged();
+                 damages.add(damage);
+
+                 process.setVariablesGson(GsonHelper.getBuilder().toJson(damages));
+
+                 processDao.update(process);
+
+                 mAdapter.notifyDataSetChanged();
+                 */
 
             }
         });
@@ -109,13 +110,16 @@ public class DamageListActivity extends CMActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == CREATE_DAMAGE) {
+        if (requestCode == CREATE_DAMAGE) {
 
-            if( resultCode == RESULT_OK) {
-               //Intent intent = this.getIntent();
-               //process.setFinished(true);
-               //processDao.update(process);
-               //this.setResult(RESULT_OK, intent);
+            if (resultCode == RESULT_OK) {
+
+                updateDamages();
+
+                //Intent intent = this.getIntent();
+                //process.setFinished(true);
+                //processDao.update(process);
+                //this.setResult(RESULT_OK, intent);
             }
             //finish();
         }

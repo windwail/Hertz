@@ -10,11 +10,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -23,21 +20,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import checkmobile.de.hertz.activity.CMActivity;
 import checkmobile.de.hertz.adapter.ImageAdapter;
-import checkmobile.de.hertz.adapter.MenuAdapter;
+import checkmobile.de.hertz.helper.ProcessesHelper;
 
-public class PhotoListActivity extends AppCompatActivity {
+public class PhotoListActivity extends CMActivity {
 
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int PERMISSIONS_CAMERA_REQUEST = 2;
@@ -74,7 +68,15 @@ public class PhotoListActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                List<String> paths = new ArrayList<String>();
+                for(File f: adapter.getList()) {
+                    paths.add(f.getAbsolutePath());
+                }
+
                 Intent intent = PhotoListActivity.this.getIntent();
+                intent.putExtra("images", paths.toArray(new String[]{}));
+                intent.putExtra(ProcessesHelper.PROCESS_ID, process.getId());
+
                 PhotoListActivity.this.setResult(RESULT_OK, intent);
                 finish();
             }

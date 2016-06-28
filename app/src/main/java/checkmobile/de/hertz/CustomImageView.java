@@ -23,6 +23,7 @@ import android.widget.ImageView;
 
 import com.pixplicity.sharp.OnSvgElementListener;
 import com.pixplicity.sharp.Sharp;
+import com.pixplicity.sharp.SvgParseException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -168,7 +169,12 @@ public class CustomImageView extends ImageView{
 
         });
 
-        mSvg.getSharpPicture();
+        try {
+            mSvg.getSharpPicture();
+        } catch (Throwable e) {
+            //e.printStackTrace();
+            //throw new RuntimeException(e);
+        }
 
         GD = new GestureDetector(getContext(), mGestureListener);
 
@@ -182,7 +188,9 @@ public class CustomImageView extends ImageView{
                 initialWidth = getMeasuredWidth();
                 initialHeight = getMeasuredHeight();
 
-                scale =  (float)(getWidth() / maxX - 0.08);
+                scale =  (float)(getWidth() / maxX - 0.08); // Scale on X
+                scale = Math.min(scale, (float)(getHeight() / maxY - 0.08)); // Or by Y
+
                 setScale(scale);
 
                 return true;
@@ -276,6 +284,12 @@ public class CustomImageView extends ImageView{
                     PathInfo pi = cache.get(id);
 
                     if(pi.region.contains((int)event.getX(), (int)event.getY())) {
+
+                        // Deselect others.
+                        for(PathInfo ip: cache.values()) {
+                            ip.selected = false;
+                        }
+
                         pi.selected = !pi.selected;
                     }
                 }

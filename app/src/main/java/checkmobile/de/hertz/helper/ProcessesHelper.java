@@ -10,6 +10,7 @@ import checkmobile.de.hertz.CaptureMileageActivity;
 import checkmobile.de.hertz.CarInfoInfleetActivity_;
 import checkmobile.de.hertz.DamageListActivity;
 import checkmobile.de.hertz.EmptyActivity;
+import checkmobile.de.hertz.PhotoListActivity;
 import checkmobile.de.hertz.SelectableListActivity;
 import checkmobile.de.hertz.TyrePressure;
 import checkmobile.de.hertz.entity.Process;
@@ -27,6 +28,10 @@ public class ProcessesHelper {
 
     public static final String PROCESS_GROUP_ID = "process_group_id";
 
+    public static final String DAMAGE_ID = "damage_id";
+
+
+
     public static final Map<Process.Type, Class<? extends Activity>> mapping = new HashMap<>();
 
     static {
@@ -36,7 +41,7 @@ public class ProcessesHelper {
         mapping.put(Process.Type.TYRE_PRESSURE, TyrePressure.class);
         mapping.put(Process.Type.CAPTURE_MILEAGE, CaptureMileageActivity.class);
         mapping.put(Process.Type.CAPTURE_FUEL, CaptureFuelActivity.class);
-        mapping.put(Process.Type.OVERVIEW_PHOTOS, EmptyActivity.class);
+        mapping.put(Process.Type.OVERVIEW_PHOTOS, PhotoListActivity.class);
         mapping.put(Process.Type.PARKING, EmptyActivity.class);
         mapping.put(Process.Type.DAMAGE, DamageListActivity.class);
         mapping.put(Process.Type.CAR_INFO, CarInfoInfleetActivity_.class);

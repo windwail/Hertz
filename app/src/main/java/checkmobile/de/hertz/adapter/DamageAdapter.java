@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,30 +54,40 @@ public class DamageAdapter extends RecyclerView.Adapter<DamageAdapter.ViewHolder
 
     // Create new views (invoked by the layout manager)
     @Override
-    public DamageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,int i) {
-
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+    public DamageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
 
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.damage_element, parent, false);
         // set the view's size, margins, paddings and layout parameters
         // ...
 
+        ViewHolder vh = new ViewHolder(v);
+        vh.vGridLayout = (GridLayout) v.findViewById(R.id.imagesGrid);
+        return vh;
+    }
 
+    // Replace the contents of a view (invoked by the layout manager)
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int i) {
+        // - get element from your dataset at this position
+        // - replace the contents of the view with that element
+        //holder.mTextView.setText(mDataset[position]);
 
-        GridLayout gv = (GridLayout) v.findViewById(R.id.imagesGrid);
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+
+        GridLayout gv = (GridLayout) holder.vGridLayout.findViewById(R.id.imagesGrid);
         //gv.setAdapter(new ImageGridAdapter(context));
 
-
-
         for(String d: damages.get(i).getImages()) {
-            ImageView iv = new ImageView(v.getContext());
+            ImageView iv = new ImageView(gv.getContext());
+
+            iv.setPadding(10,10,10,10);
 
             gv.addView(iv);
 
-            Picasso.with(context).load(R.drawable.cat).resize(displayMetrics.widthPixels/2-10,0).into(iv);
+            Picasso.with(context).load(new File(d)).resize(displayMetrics.widthPixels/2-30,0).into(iv);
 
             /*
             android:layout_height="160dp"
@@ -88,17 +99,6 @@ public class DamageAdapter extends RecyclerView.Adapter<DamageAdapter.ViewHolder
                     />
              */
         }
-
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
-    }
-
-    // Replace the contents of a view (invoked by the layout manager)
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        //holder.mTextView.setText(mDataset[position]);
 
     }
 

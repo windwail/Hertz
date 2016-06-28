@@ -9,9 +9,18 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
+
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import checkmobile.de.hertz.activity.CMActivity;
 import checkmobile.de.hertz.dao.ProcessDao;
+import checkmobile.de.hertz.entity.Process;
+import checkmobile.de.hertz.gson.Damage;
+import checkmobile.de.hertz.gson.GsonHelper;
 import checkmobile.de.hertz.helper.ProcessesHelper;
 
 public class DamageActivity extends CMActivity {
@@ -27,6 +36,10 @@ public class DamageActivity extends CMActivity {
     private ScaleGestureDetector SGD;
 
     private GestureDetector GD ;
+
+    private Spinner damagedArea;
+
+    private Damage damage;
 
     private final GestureDetector.SimpleOnGestureListener mGestureListener = new GestureDetector.SimpleOnGestureListener() {
 
@@ -50,17 +63,38 @@ public class DamageActivity extends CMActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_damage);
         imageView = (CustomImageView) findViewById(R.id.imageView);
+        damagedArea = (Spinner) findViewById(R.id.damagedArea);
 
         SGD = new ScaleGestureDetector(this,new ScaleListener());
         GD = new GestureDetector(this, mGestureListener);
 
-        Button doneButton = (Button) findViewById(R.id.doneButton);
+        final Button doneButton = (Button) findViewById(R.id.doneButton);
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), DamageDetailsActivity.class);
-                myIntent.putExtra(ProcessesHelper.PROCESS_ID, process.getId());
-                DamageActivity.this.startActivityForResult(myIntent, CREATE_DAMAGE);
+
+                if(damage == null) {
+                    processDao.update(process);
+                    List<Damage> damages = process.getDamages();
+
+                    damage = new Damage();
+                    damage.setArea(damagedArea.getSelectedItem().toString());
+                    damage.setComment("");
+                    damage.setImages(new String[]{});
+                    damage.setPiece("");
+                    damage.setRegisterDate(new DateTime());
+                    damage.setSeverity("");
+
+                    damages.add(damage);
+
+                    process.addDamage(damage);
+                    processDao.update(process);
+
+                }
+
+                Intent i = getIntent(DamageDetailsActivity.class, v.getContext());
+                i.putExtra(ProcessesHelper.DAMAGE_ID, damage.getUid());
+                DamageActivity.this.startActivityForResult(i, CREATE_DAMAGE);
             }
         });
     }
@@ -104,12 +138,27 @@ public class DamageActivity extends CMActivity {
         if(requestCode == CREATE_DAMAGE ) {
 
             if(resultCode == RESULT_OK) {
+                process = (Process) processDao.queryForId(process_id);
+                List<Damage> damages = process.getDamages();
+
+                String[] images = data.getStringArrayExtra("images");
+
+                for(Damage d: damages) {
+                    if(d.getUid().equalsIgnoreCase(damage.getUid())) {
+                        damage = d;
+                        break;
+                    }
+                }
+
+                damage.setImages(images);
+
+                process.setDamages(damages);
+                processDao.update(process);
+
                 Intent intent = this.getIntent();
                 this.setResult(RESULT_OK, intent);
-
-
+                finish();
             }
-            finish();
 
         }
     }

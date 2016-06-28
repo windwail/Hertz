@@ -20,20 +20,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import checkmobile.de.hertz.R;
+import lombok.Getter;
 
 /**
  * Created by icetusk on 15.06.16.
  */
 public class ImageAdapter extends ArrayAdapter<File> {
 
+    @Getter
     List<File> list=new ArrayList<>();
-
-
 
     public ImageAdapter(Context context, int resource) {
         super(context, resource);
     }
-
 
     @Override
     public File getItem(int position) {

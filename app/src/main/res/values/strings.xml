@@ -40,6 +40,15 @@
         <item>Ford</item>
     </array>
 
+    <array name="damaged_area">
+        <item>-</item>
+        <item>Left</item>
+        <item>Right</item>
+        <item>Front</item>
+        <item>Back</item>
+    </array>
+
+
     <string name="ic_access_alarms">&#xe000;</string>
     <string name="ic_access_time">&#xe001;</string>
     <string name="ic_accessibility">&#xe002;</string>

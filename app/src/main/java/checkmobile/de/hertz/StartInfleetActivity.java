@@ -102,6 +102,7 @@ public class StartInfleetActivity extends AppCompatActivity {
             processDao.create(carProcessGroup.constructProcess(Process.Type.CAPTURE_MILEAGE));
             processDao.create(carProcessGroup.constructProcess(Process.Type.CAPTURE_FUEL));
             processDao.create(carProcessGroup.constructProcess(Process.Type.DAMAGE));
+            processDao.create(carProcessGroup.constructProcess(Process.Type.OVERVIEW_PHOTOS));
 
 
             //processGroupDao.refresh(pg);
