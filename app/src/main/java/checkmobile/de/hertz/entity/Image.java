@@ -16,26 +16,33 @@ import lombok.Setter;
  */
 
 @DatabaseTable(tableName = "image", daoClass = ImageDao.class)
+@Getter
+@Setter
 public class Image {
+
+    public Image() {
+    }
+
+    public Image(String path) {
+        createDate = new DateTime();
+        this.path = path;
+    }
 
     //Database Field for Table Student
     @DatabaseField(generatedId = true)
-    @Getter
-    @Setter
     private int id;
 
     @DatabaseField(dataType = DataType.DATE_TIME)
-    @Getter
-    @Setter
     private DateTime createDate;
 
     @DatabaseField
-    @Getter
-    @Setter
-    String variablesGson;
+    private String variablesGson;
+
+    @DatabaseField
+    private String path;
 
     @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "process")
-    @Getter
-    @Setter
     private Process process;
+
+
 }

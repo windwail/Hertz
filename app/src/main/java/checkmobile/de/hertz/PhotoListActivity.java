@@ -29,6 +29,7 @@ import java.util.List;
 
 import checkmobile.de.hertz.activity.CMActivity;
 import checkmobile.de.hertz.adapter.ImageAdapter;
+import checkmobile.de.hertz.entity.Image;
 import checkmobile.de.hertz.helper.ProcessesHelper;
 
 public class PhotoListActivity extends CMActivity {
@@ -61,6 +62,11 @@ public class PhotoListActivity extends CMActivity {
         listView=(ListView)findViewById(R.id.list_view);
 
         adapter = new ImageAdapter(getApplicationContext(), R.layout.image_element);
+
+        for(Image i: process.getImages()) {
+            adapter.add(new File(i.getPath()));
+        }
+
         listView.setAdapter(adapter);
 
         FloatingActionButton save = (FloatingActionButton) findViewById(R.id.save);

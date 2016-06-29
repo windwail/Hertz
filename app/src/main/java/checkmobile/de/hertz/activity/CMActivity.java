@@ -29,6 +29,8 @@ public class CMActivity extends AppCompatActivity {
 
     protected RuntimeExceptionDao processDao;
 
+    protected RuntimeExceptionDao imageDao;
+
     protected DatabaseHelper dbHelper;
 
     protected ProcessGroup processGroup;
@@ -44,6 +46,7 @@ public class CMActivity extends AppCompatActivity {
         dbHelper = OpenHelperManager.getHelper(this,DatabaseHelper.class);
         processDao = dbHelper.getProcessDAO();
         processGroupDao = dbHelper.getProcessGroupDAO();
+        imageDao = dbHelper.getImageDAO();
 
         Intent i = getIntent();
 

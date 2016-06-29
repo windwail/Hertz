@@ -18,11 +18,13 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import checkmobile.de.hertz.activity.CMActivity;
 import checkmobile.de.hertz.adapter.ProcessesAdapter;
 import checkmobile.de.hertz.db.DatabaseHelper;
+import checkmobile.de.hertz.entity.Image;
 import checkmobile.de.hertz.entity.Process;
 import checkmobile.de.hertz.entity.ProcessGroup;
 import checkmobile.de.hertz.gson.Damage;
@@ -139,30 +141,36 @@ public class ProcessesActivity extends CMActivity {
 
         switch(type) {
             case OVERVIEW_PHOTOS:
+                if( resultCode == RESULT_OK) {
+                    String[] images = data.getStringArrayExtra("images");
 
-                String[] images = data.getStringArrayExtra("images");
+                    process = (Process) processDao.queryForId(data.getIntExtra(ProcessesHelper.PROCESS_ID, -1));
 
-                process = (Process) processDao.queryForId(data.getIntExtra(ProcessesHelper.PROCESS_ID, -1));
-
-                for()
-
-
-                String[] images = data.getStringArrayExtra("images");
-
-                for(Damage d: damages) {
-                    if(d.getUid().equalsIgnoreCase(damage.getUid())) {
-                        damage = d;
-                        break;
+                    HashSet<String> paths = new HashSet<>();
+                    for (Image i : process.getImages()) {
+                        paths.add(i.getPath());
                     }
+
+                    for (String i : images) {
+
+                        // ignore already existing images.
+                        if (paths.contains(i)) {
+                            continue;
+                        }
+
+                        Image img = new Image(i);
+                        img.setProcess(process);
+                        imageDao.create(img);
+                    }
+
+                    process.setFinished(true);
+
+                    processDao.update(process);
+
+
                 }
-
-                damage.setImages(images);
-
-                process.setDamages(damages);
-                processDao.update(process);
-
-
                 break;
+
         }
     }
 

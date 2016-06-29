@@ -159,7 +159,6 @@ public class DamageActivity extends CMActivity {
                 this.setResult(RESULT_OK, intent);
                 finish();
             }
-
         }
     }
 }

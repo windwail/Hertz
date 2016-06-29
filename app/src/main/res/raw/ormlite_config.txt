@@ -53,6 +53,9 @@ dataPersister=DATE_TIME
 fieldName=variablesGson
 # --field-end--
 # --field-start--
+fieldName=path
+# --field-end--
+# --field-start--
 fieldName=process
 columnName=process
 foreign=true
