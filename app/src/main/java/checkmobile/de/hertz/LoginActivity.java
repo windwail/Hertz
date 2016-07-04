@@ -1,5 +1,6 @@
 package checkmobile.de.hertz;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import checkmobile.de.hertz.activity.CMActivity;
+import checkmobile.de.hertz.helper.AccessoriesHelper;
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpPost;
@@ -39,15 +41,15 @@ public class LoginActivity extends CMActivity {
             public void onClick(View v) {
                 //Intent menuIntent = new Intent(getApplicationContext(), SelectableListActivity.class );
 
-                /*
+
                 Intent menuIntent = new Intent(getApplicationContext(), StationActivity.class );
                 menuIntent.putExtra(SelectableListActivity.HELPER_EXTRA, new AccessoriesHelper());
                 startActivity(menuIntent);
-                */
+
 
                 // Create and populate a simple object to be used in the request
 
-                new RestTest().execute();
+                //new RestTest().execute();
             }
         });
 
